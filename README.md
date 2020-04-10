@@ -1,5 +1,9 @@
-The MVP of Michael Drennan, Mairi Fairbairn, and David Schlessinger
+Create a browser game based on an existing card or dice game. Model and test the game logic and then display it in the browser for a user to interact with.
+
+The MVP of Michael Drennan, Mairi Fairbairn, and David Schlessinger.
+
 Yahtzee Dice Game
+
 You have been approached to build an app that lets the user play Yahtzee. Yahtzee is a dice game where the player rolls 5 dice and tries to make different combinations to score.
 
 MVP
