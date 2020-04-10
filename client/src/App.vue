@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <high-scores></high-scores>
-    <div id="dice-wrapper">
+    <div >
       <rolled-dice></rolled-dice>
       <saved-dice></saved-dice>
     </div>
-    <scorecard></scorecard>
+    <scorecard ></scorecard>
   </div>
 </template>
 
