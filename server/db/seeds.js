@@ -1,20 +1,20 @@
-use scores;
+use zeeyah;
 db.dropDatabase();
 
 db.scores.insertMany([
     {
-        userName: "Michael",
-        scoreNumber: 1500,
-        date: new Date('2020-02-20')
+        "userName": "Michael",
+        "scoreNumber": 1502,
+        "date": "2020-02-20"
     },
     {
-        userName: "Mairi",
-        scoreNumber: 1700,
-        date: new Date('2020-03-02')
+        "userName": "Mairi",
+        "scoreNumber": 1700,
+        "date": "2020-02-20"
     },
     {
-        userName: "Keith",
-        scoreNumber: 1458,
-        date: new Date('2020-04-12')
+        "userName": "Keith",
+        "scoreNumber": 1458,
+        "date": "2020-02-20"
     }
 ])
