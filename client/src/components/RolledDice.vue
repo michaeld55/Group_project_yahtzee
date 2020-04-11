@@ -15,11 +15,11 @@ export default {
   data(){
     return {
       diceArray: [
-        {diceValue: 0},
-        {diceValue: 0},
-        {diceValue: 0},
-        {diceValue: 0},
-        {diceValue: 0}
+        {diceValue: 0, id: 1},
+        {diceValue: 0, id: 2},
+        {diceValue: 0, id: 3},
+        {diceValue: 0, id: 4},
+        {diceValue: 0, id: 5}
       ],
       rollsLeft: 3
     }

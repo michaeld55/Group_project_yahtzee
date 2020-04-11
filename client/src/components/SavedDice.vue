@@ -21,12 +21,15 @@ export default {
       this.savedDice.push(dice);
     }),
 
+    eventBus.$emit('saved-dice-to-scorecard', (this.savedDice))
+
     eventBus.$on('move-remaining-dice', (remainingDiceArray) => {
       for (let die of remainingDiceArray){
         this.savedDice.push(die);
       }
     })
   },
+
   methods:{
     handleClickSaved(index){
       eventBus.$emit('dice-unselected', this.savedDice[index]);
