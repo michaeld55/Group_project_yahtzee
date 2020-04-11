@@ -18,15 +18,25 @@ import Scorecard from '@/components/Scorecard.vue';
 
 export default {
   name: "app",
-  data(){
-    //something
-  },
+  // data(){
+  //   return {
+  //     null
+  //   }
+  // },
+  mounted(){
 
+
+  },
   components: {
     'high-scores': HighScores,
     'rolled-dice': RolledDice,
     'saved-dice': SavedDice,
     'scorecard': Scorecard
+  },
+  methods: {
+    // getDiceNumbers(){
+    //   const diceNumbers= DiceRoller.rollDice(),
+    // }
   }
 }
 </script>

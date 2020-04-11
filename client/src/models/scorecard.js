@@ -6,20 +6,20 @@ const Scorecard = function(card, dice){
 Scorecard.prototype.diceValues = function(){
     result = []
     result = this.dice.map(function(die){
-        return die.value;
+        return die.diceValue;
     })
     return result;
 }
 
 Scorecard.prototype.addDice = function(dice){
     result = dice.reduce((total, die) => {
-        return total += die.value;
+        return total += die.diceValue;
     }, 0);
     return result;
 }
 
-Scorecard.prototype.getDiceWith = function(value){
-    result = this.dice.filter(die => die.value === value);
+Scorecard.prototype.getDiceWith = function(diceValue){
+    result = this.dice.filter(die => die.diceValue === diceValue);
     return result;
 }
 
