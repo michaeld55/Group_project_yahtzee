@@ -1,7 +1,8 @@
 <template lang="html">
   <div>
     <p>ROLLED DICE</p>
-    <p v-for="(die, index) in diceArray" :die="die" :key="index"> {{ die.diceValue }} </p>
+    <p v-on:click="handleClickRolled(index)" v-for="(die, index) in diceArray" :die="die" :key="index"> {{ die.diceValue }} </p>
+    <button v-on:click="handleRollDice">Roll Them Dice: You Have {{rollsLeft}} rolls left</button>
   </div>
 </template>
 <script>
@@ -19,33 +20,41 @@ export default {
         {diceValue: 0},
         {diceValue: 0},
         {diceValue: 0}
-      ]
+      ],
+      rollsLeft: 3
     }
   },
   mounted(){
-    this.getDiceNumbers()
+    this.getDiceNumbers(),
+    eventBus.$on('dice-unselected', (dice)=>{
+      this.diceArray.push(dice);
+    })
   },
   methods: {
     getDiceNumbers(){
-      console.log(diceRoller.rollDice(this.diceArray.length))
       return this.diceArray = diceRoller.rollDice(this.diceArray.length);
+    },
+
+    handleClickRolled(index){
+      if (this.rollsLeft < 3){
+        eventBus.$emit('dice-selected', this.diceArray[index]);
+        this.diceArray.splice(index, 1);
+      }
+    },
+
+    handleRollDice(){
+      if( (this.rollsLeft > 1) && (this.diceArray.length > 0) ) {
+        this.getDiceNumbers();
+        this.rollsLeft --;
+        eventBus.$emit('rolled-dice-to-scorecard', this.diceArray)
+      } else if ( (this.rollsLeft === 1) && (this.diceArray.length > 0) ){
+        eventBus.$emit('move-remaining-dice', this.diceArray)
+        let diceArrayLength = this.diceArray.length
+        this.diceArray.splice(0, diceArrayLength)
+        this.rollsLeft --;
+      }
     }
   }
-
-// option 1
-//dice: [1, 2, 3, 3, 6]
-// roll 2
-// dice: [2, 2]
-
-// dice: [{roll: 1, img: die_one_face.img }]
-
- //option 2
-//dice: [{roll: 1, saved: false}, {roll: 2, saved: false}, ]
-
-//roll 2
-// dice: [{roll: 1, saved: true}, {roll: 5, saved: false}, ]
-
-
 }
 </script>
 
