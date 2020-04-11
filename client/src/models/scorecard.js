@@ -23,7 +23,7 @@ Scorecard.prototype.getDiceWith = function(value){
     return result;
 }
 
-Scorecard.prototype.checkVaildUpper = function(){
+Scorecard.prototype.checkValidUpper = function(){
     values = Object.values(this.card.upper.scores);
     accepted = []
     accepted = values.reduce(function(filtered, section){
@@ -45,7 +45,7 @@ Scorecard.prototype.scoreUpper = function(){
             sumDice= scorecard.addDice(dice);
             this.card.upper.scores[section].potentialScore = sumDice
             this.card.upper.validDice = true
-        }else if((scorecard.checkVaildUpper().length === 0) && (this.card.validDice  === false)){
+        }else if((scorecard.checkValidUpper().length === 0) && (this.card.validDice  === false)){
             this.card.upper.scores[section].potentialScore = 0
         }
         number ++;
