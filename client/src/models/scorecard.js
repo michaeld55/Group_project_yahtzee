@@ -44,8 +44,8 @@ Scorecard.prototype.scoreUpper = function(){
         if ((dice.length > 0) && (this.card.upper.scores[section].currentScore === null)){
             sumDice= scorecard.addDice(dice);
             this.card.upper.scores[section].potentialScore = sumDice
-            this.card.upper.validDice = true
-        }else if((scorecard.checkValidUpper().length === 0) && (this.card.validDice  === false)){
+            this.card.upper.validDicePlacement = true
+        }else if(this.card.validDicePlacement  === false){
             this.card.upper.scores[section].potentialScore = 0
         }
         number ++;
