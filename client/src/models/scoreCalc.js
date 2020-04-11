@@ -78,4 +78,16 @@ ScoreClac.prototype.scoreUpper = function(){
 
 }
 
+// score lower
+
+// score of a kind
+
+// score straights
+
+// score yatzee
+
+//score chance
+
+// score full card
+
 module.exports = ScoreClac
