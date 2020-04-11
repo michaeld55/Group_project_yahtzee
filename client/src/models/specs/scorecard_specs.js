@@ -36,7 +36,7 @@ describe('ScoreCalc', function(){
                     smallStraight:{currentScore: null, potentialScore: 0, accepts: 4},
                     largeStraight:{currentScore: null, potentialScore: 0, accepts: 5},
                     chance:{currentScore: null, potentialScore: 0, accepts: 5},
-                    yahtzee:{currentScore: null, potentialScore: 0, accepts:5}
+                    yahtzee:{currentScore: null, potentialScore: 0, accepts: 5}
                 },
                 validDicePlacement: false,
                 allowZeroScore: false,
