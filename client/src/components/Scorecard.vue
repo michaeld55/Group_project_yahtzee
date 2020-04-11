@@ -19,5 +19,9 @@ export default {
 </script>
 
 <style scoped>
-
+    p {
+        margin: 0px;
+        border: 1px solid black;
+        height: 100%;
+    }
 </style>

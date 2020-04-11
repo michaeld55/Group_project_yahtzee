@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <high-scores></high-scores>
-    <div >
-      <rolled-dice></rolled-dice>
-      <saved-dice></saved-dice>
-    </div>
-    <scorecard ></scorecard>
+  <div class="grid-container" id="app">
+    <div class="grid-item"><high-scores></high-scores></div>
+      <div class="grid-item">
+        <rolled-dice></rolled-dice>
+        <saved-dice></saved-dice>
+      </div>
+    <div class="grid-item"><scorecard ></scorecard></div>
   </div>
 </template>
 
@@ -31,6 +31,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+html, body {
+  height: 100%;
+  margin: 0px;
+}
 
+.grid-container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 33% 34% 33%;
+  border: 1px solid black;
+}
 </style>
