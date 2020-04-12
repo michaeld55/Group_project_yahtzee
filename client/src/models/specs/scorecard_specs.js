@@ -177,28 +177,28 @@ describe('ScoreCalc', function(){
         assert.deepStrictEqual(actual, expected)
     })
 
-    xit("should score a small straight", function(){
+    it("should score a small straight", function(){
         die1 = {diceValue: 1};
-        die2 = {diceValue: 2};
-        die3 = {diceValue: 3};
-        die4 = {diceValue: 4};
-        die5 = {diceValue: 2};
+        die2 = {diceValue: 3};
+        die3 = {diceValue: 4};
+        die4 = {diceValue: 5};
+        die5 = {diceValue: 6};
 
         dice2 = [die1, die2, die3, die4, die5];
 
         scoreCalc2 = new ScoreCalc(scorecard, dice2);
 
         const actual = scoreCalc2.smallStraight();
-        const expected =  {currentScore: null, potentialScore: 30, accepts: 5};
+        const expected =  {currentScore: null, potentialScore: 30, accepts: 4};
         assert.deepStrictEqual(actual, expected)
     })
 
-    xit("should score a large straight", function(){
+    it("should score a large straight", function(){
         die1 = {diceValue: 1};
         die2 = {diceValue: 2};
         die3 = {diceValue: 3};
         die4 = {diceValue: 4};
-        die5 = {diceValue: 2};
+        die5 = {diceValue: 5};
 
         dice2 = [die1, die2, die3, die4, die5];
 
@@ -207,5 +207,11 @@ describe('ScoreCalc', function(){
         const actual = scoreCalc2.largeStraight();
         const expected =  {currentScore: null, potentialScore: 40, accepts: 5};
         assert.deepStrictEqual(actual, expected)
+    })
+
+    it("should be able to get unique dice values from the array", function(){
+        const actual = scoreCalc.getUniqueFaceValues();
+        const expected = [1,2,3,5];
+        assert.deepStrictEqual(actual, expected);
     })
 });
