@@ -17,30 +17,30 @@ describe('ScoreCalc', function(){
         scorecard = { 
             upper: {
                 scores: {
-                    ones:{currentScore: null, potentialScore: 0, accepts: 1}, 
-                    twos:{currentScore: null, potentialScore: 0, accepts: 2}, 
-                    threes:{currentScore: null, potentialScore: 0, accepts: 3}, 
-                    fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
-                    fives:{currentScore: null, potentialScore: 0, accepts: 5}, 
-                    sixes:{currentScore: null, potentialScore: 0, accepts: 6},
+                    ones:{currentScore: null, potentialScore: null, accepts: 1}, 
+                    twos:{currentScore: null, potentialScore: null, accepts: 2}, 
+                    threes:{currentScore: null, potentialScore: null, accepts: 3}, 
+                    fours:{currentScore: null, potentialScore: null, accepts: 4}, 
+                    fives:{currentScore: null, potentialScore: null, accepts: 5}, 
+                    sixes:{currentScore: null, potentialScore: null, accepts: 6},
                 },
                 validDicePlacement: false,
-                subTotal: 0, 
-                upperBonus: 0,
+                subTotal: null, 
+                upperBonus: null,
             },
             lower: {
                 scores:{
-                    threeOfAKind:{currentScore: null, potentialScore: 0, accepts: 3},
-                    fourOfAKind:{currentScore: null, potentialScore: 0, accepts: 4},
-                    fullHouse:{currentScore: null, potentialScore: 0, accepts: [3, 2]},
-                    smallStraight:{currentScore: null, potentialScore: 0, accepts: 4},
-                    largeStraight:{currentScore: null, potentialScore: 0, accepts: 5},
-                    chance:{currentScore: null, potentialScore: 0, accepts: 5},
-                    yahtzee:{currentScore: null, potentialScore: 0, accepts: 5}
+                    threeOfAKind:{currentScore: null, potentialScore: null, accepts: 3},
+                    fourOfAKind:{currentScore: null, potentialScore: null, accepts: 4},
+                    fullHouse:{currentScore: null, potentialScore: null, accepts: [3, 2]},
+                    smallStraight:{currentScore: null, potentialScore: null, accepts: 4},
+                    largeStraight:{currentScore: null, potentialScore: null, accepts: 5},
+                    chance:{currentScore: null, potentialScore: null, accepts: 5},
+                    yahtzee:{currentScore: null, potentialScore: null, accepts: 5}
                 },
                 validDicePlacement: false,
                 allowZeroScore: false,
-                totalScore: 0
+                totalScore: null
             }
         };
         scoreCalc = new ScoreCalc(scorecard, dice);
@@ -93,39 +93,39 @@ describe('ScoreCalc', function(){
             ones:{currentScore: null, potentialScore: 1, accepts: 1}, 
             twos:{currentScore: null, potentialScore: 4, accepts: 2}, 
             threes:{currentScore: null, potentialScore: 3, accepts: 3}, 
-            fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
+            fours:{currentScore: null, potentialScore: null, accepts: 4}, 
             fives:{currentScore: null, potentialScore: 5, accepts: 5}, 
-            sixes:{currentScore: null, potentialScore: 0, accepts: 6}, 
+            sixes:{currentScore: null, potentialScore: null, accepts: 6}, 
         },
         validDicePlacement: true,
         subTotal: 0, 
-        upperBonus: 0};
+        upperBonus: null};
         assert.deepStrictEqual(actual, expected);
 
         scoreCalc.scorecard.upper = {scores: {
-            ones:{currentScore: 1, potentialScore: 0, accepts: 1}, 
-            twos:{currentScore: 4, potentialScore: 0, accepts: 2}, 
-            threes:{currentScore: 3, potentialScore: 0, accepts: 3}, 
-            fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
-            fives:{currentScore: 5, potentialScore: 0, accepts: 5}, 
-            sixes:{currentScore: null, potentialScore: 0, accepts: 6}, 
+            ones:{currentScore: 1, potentialScore: null, accepts: 1}, 
+            twos:{currentScore: 4, potentialScore: null, accepts: 2}, 
+            threes:{currentScore: 3, potentialScore: null, accepts: 3}, 
+            fours:{currentScore: null, potentialScore: null, accepts: 4}, 
+            fives:{currentScore: 5, potentialScore: null, accepts: 5}, 
+            sixes:{currentScore: null, potentialScore: null, accepts: 6}, 
         },
         validDicePlacement: false,
         subTotal: 0, 
-        upperBonus: 0};
+        upperBonus: null};
 
         const actual2 = scoreCalc.scoreUpper();
         const expected2 = {scores: {
-            ones:{currentScore: 1, potentialScore: 0, accepts: 1}, 
-            twos:{currentScore: 4, potentialScore: 0, accepts: 2}, 
-            threes:{currentScore: 3, potentialScore: 0, accepts: 3}, 
-            fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
-            fives:{currentScore: 5, potentialScore: 0, accepts: 5}, 
-            sixes:{currentScore: null, potentialScore: 0, accepts: 6}, 
+            ones:{currentScore: 1, potentialScore: null, accepts: 1}, 
+            twos:{currentScore: 4, potentialScore: null, accepts: 2}, 
+            threes:{currentScore: 3, potentialScore: null, accepts: 3}, 
+            fours:{currentScore: null, potentialScore: null, accepts: 4}, 
+            fives:{currentScore: 5, potentialScore: null, accepts: 5}, 
+            sixes:{currentScore: null, potentialScore: null, accepts: 6}, 
         },
         validDicePlacement: false,
         subTotal: 5, 
-        upperBonus: 0};
+        upperBonus: null};
         assert.deepStrictEqual(actual2, expected2)
     })
 
