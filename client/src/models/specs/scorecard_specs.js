@@ -39,9 +39,9 @@ describe('ScoreCalc', function(){
                     yahtzee:{currentScore: null, potentialScore: null, accepts: 5}
                 },
                 validDicePlacement: false,
-                allowZeroScore: false,
                 totalScore: null
-            }
+            },
+            allowZeroScore: false,
         };
         scoreCalc = new ScoreCalc(scorecard, dice);
     })
@@ -87,7 +87,7 @@ describe('ScoreCalc', function(){
         assert.strictEqual(actual, expected)
     })
 
-    it("should be able to show potentail score in upper", function(){
+    it("should be able to show potential score in upper", function(){
         const actual = scoreCalc.scoreUpper();
         const expected = {scores:{
             ones:{currentScore: null, potentialScore: 1, accepts: 1}, 
@@ -129,37 +129,83 @@ describe('ScoreCalc', function(){
         assert.deepStrictEqual(actual2, expected2)
     })
 
-})
+    it("should be able to score three of kind", function(){
+        die1 = {diceValue: 2};
+        die2 = {diceValue: 2};
+        die3 = {diceValue: 2};
+        die4 = {diceValue: 3};
+        die5 = {diceValue: 5};
 
-/*
-passed in 
-scoreCalc:  
-upper{
-ones        null
-},
-lower{
-    3 of a kind 
-},
-total: 
-dice rolled = [1,1,1,1,5]
+        dice2 = [die1, die2, die3, die4, die5];
 
-for die in dice
-if dice at [null] = 1 and scoreCalc ones null then 
-can score in one in upper,
-return scoreCalc.player.ones == 4
-.....
+        scoreCalc2 = new ScoreCalc(scorecard, dice2);
 
-if 3 dice === same number
-can score in 3 of kind lower,
-.....
+        const actual = scoreCalc2.threeOfAKind();
+        const expected =  {currentScore: null, potentialScore: 14, accepts: 3};
+        assert.deepStrictEqual(actual, expected)
+    })
 
-{
-scoreCalc:  
-upper{
-ones:        4
-},
-lower{
-    3 of a kind 
-},
-total: 
-*/
+    it("should be able to score four of kind", function(){
+        die1 = {diceValue: 2};
+        die2 = {diceValue: 2};
+        die3 = {diceValue: 2};
+        die4 = {diceValue: 2};
+        die5 = {diceValue: 5};
+
+        dice2 = [die1, die2, die3, die4, die5];
+
+        scoreCalc2 = new ScoreCalc(scorecard, dice2);
+
+        const actual = scoreCalc2.fourOfAKind();
+        const expected =  {currentScore: null, potentialScore: 13, accepts: 4};
+        assert.deepStrictEqual(actual, expected)
+    })
+
+    it("should be able to score yatzee", function(){
+        die1 = {diceValue: 2};
+        die2 = {diceValue: 2};
+        die3 = {diceValue: 2};
+        die4 = {diceValue: 2};
+        die5 = {diceValue: 2};
+
+        dice2 = [die1, die2, die3, die4, die5];
+
+        scoreCalc2 = new ScoreCalc(scorecard, dice2);
+
+        const actual = scoreCalc2.yatzee();
+        const expected =  {currentScore: null, potentialScore: 50, accepts: 5};
+        assert.deepStrictEqual(actual, expected)
+    })
+
+    xit("should score a small straight", function(){
+        die1 = {diceValue: 1};
+        die2 = {diceValue: 2};
+        die3 = {diceValue: 3};
+        die4 = {diceValue: 4};
+        die5 = {diceValue: 2};
+
+        dice2 = [die1, die2, die3, die4, die5];
+
+        scoreCalc2 = new ScoreCalc(scorecard, dice2);
+
+        const actual = scoreCalc2.smallStraight();
+        const expected =  {currentScore: null, potentialScore: 30, accepts: 5};
+        assert.deepStrictEqual(actual, expected)
+    })
+
+    xit("should score a large straight", function(){
+        die1 = {diceValue: 1};
+        die2 = {diceValue: 2};
+        die3 = {diceValue: 3};
+        die4 = {diceValue: 4};
+        die5 = {diceValue: 2};
+
+        dice2 = [die1, die2, die3, die4, die5];
+
+        scoreCalc2 = new ScoreCalc(scorecard, dice2);
+
+        const actual = scoreCalc2.largeStraight();
+        const expected =  {currentScore: null, potentialScore: 40, accepts: 5};
+        assert.deepStrictEqual(actual, expected)
+    })
+});
