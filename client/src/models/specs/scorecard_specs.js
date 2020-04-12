@@ -72,11 +72,11 @@ describe('ScoreCalc', function(){
     })
 
     it("should be able to check valid sections", function(){
-        const actual = scoreCalc.checkValidUpper();
+        const actual = scoreCalc.getUnscoredUpperBoxes();
         const expected = [1, 2, 3, 4, 5, 6];
         assert.deepStrictEqual(actual, expected);
         scoreCalc.scorecard.upper.scores.ones.currentScore = 1;
-        const actual2 = scoreCalc.checkValidUpper();
+        const actual2 = scoreCalc.getUnscoredUpperBoxes();
         const expected2 = [2, 3, 4, 5, 6];
         assert.deepStrictEqual(actual2, expected2);
     })

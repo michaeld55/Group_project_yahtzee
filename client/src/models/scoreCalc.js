@@ -23,44 +23,13 @@ ScoreClac.prototype.getDiceWith = function(value){
     return result;
 }
 
-ScoreClac.prototype.checkValidUpper = function(){
-    values = Object.values(this.scorecard.upper.scores);
-    accepted = []
-    accepted = values.reduce(function(filtered, section){
-        if(section.currentScore === null){
-            filtered.push(section.accepts);
-        }
-        return filtered;
-    }, []);
-    test = accepted;
-      
-    // Loop for array1 
-    for(let i = 0; i < test.length; i++) { 
-        // Loop for array2 
-        for(let j = 0; j < this.dice.length; j++) { 
-                  
-        // Compare the element of each and 
-        // every element from both of the 
-        // arrays 
-            if(test[i] === this.dice[j]) { 
-                  
-        // Return if common element found 
-                return console.log(true); 
-            } 
-        } 
-     
-          
-        // Return if no common element exist 
-        return console.log(false);  
-    } 
-      
-    // document.write(findCommonElement(array1, array2)) 
-    this.dice.includes(test)
-    console.log(this.dice.every(test))
-    result =accepted
-    return result;
-
+ScoreClac.prototype.getUnscoredUpperBoxes = function() {
+    allUpperRows = Object.values(this.scorecard.upper.scores);
+    unscoredBoxes = []
+    unscoredBoxes = allUpperRows.filter( (row) => { row.currentScore === null } )
+    return unscoredBoxes; // Array of unscored boxes in upper
 }
+
 
 ScoreClac.prototype.sumSubTotal = function(){
     let total = 0;
