@@ -82,9 +82,6 @@ ScoreCalc.prototype.scoreUpper = function(){
     return this.scorecard.upper
 
 }
-            //if ((dice.length > 0) && (this.scorecard.upper.scores[row].currentScore === null)){
-        //    sumDice = this.addDice(dice) || ((this.scorecard.allowZeroScores) && (this.scorecard.upper.scores[row].currentScore === null))
-        //    ones:{currentScore: null, potentialScore: null, accepts: 1}, 
 
 
 // score lower
@@ -138,7 +135,7 @@ ScoreCalc.prototype.fourOfAKind = function(){
 
 // score straights
 ScoreCalc.prototype.smallStraight = function(){
-    //[1, 2, 3, 4], [2, 3, 4, 5], or [3, 4, 5, 6]
+    //const expected =  {currentScore: null, potentialScore: 30, accepts: 5};
     let diceFaceValues = this.diceValues();
     diceFaceValues.sort();
 
@@ -157,9 +154,15 @@ ScoreCalc.prototype.smallStraight = function(){
    for (var i = 0; i < 2; i++) {
     //    if(diceFaceValues.slice(i,i+4)===smallStraightArray1){         
     //    }
-    if(diceFaceValues[i]==smallStraightArray1[i]){
-        
-    }
+        if(diceFaceValues[i]!=smallStraightArray1[i]){
+            continue;
+        } else if(diceFaceValues[i]!=smallStraightArray2[i]){
+            continue;
+        } else if(diceFaceValues[i]!= smallStraightArray3[i]){
+            break;
+        } else {
+            return this.scorecard.lower.scores.smallStraight;
+        }
 
   }
   
@@ -196,6 +199,11 @@ ScoreCalc.prototype.yatzee = function(){
         else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.yahtzee.currentScore  === null ) )
         {
             this.scorecard.lower.scores.yahtzee.potentialScore = 0
+        }
+
+        else if ( ( diceWithFaceValue.length === 5 ) && ( this.scorecard.lower.scores.yahtzee.currentScore > 0 ) )
+        {
+            this.scorecard.lower.scores.yahtzee.currentScore += 100;
         }
 
         diceFaceValue ++;

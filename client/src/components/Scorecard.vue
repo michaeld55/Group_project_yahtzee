@@ -1,5 +1,7 @@
 <template>
-    <p>SCORE CARD</p>
+    <div>
+        <p>SCORE CARD</p>
+    </div>  
 </template>
 
 <script>
