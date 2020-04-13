@@ -3,19 +3,9 @@
         <p>SCORE CARD</p>
         <table v-if="playerScorecard.scorecard" style="width:100%">
             <tr>
-                <th></th>
+                <th>Upper Section</th>
                 <th>Score</th> 
             </tr>
-            <!-- <tr>
-                <td> Ones</td>
-                <td v-if="playerScorecard.scorecard.upper.scores.ones.currentScore"> {{playerScorecard.scorecard.upper.scores.ones.currentScore}}</td>
-                <td v-on:click="handleSaveScore" v-if="playerScorecard.scorecard.upper.scores.ones.potentialScore"> ({{playerScorecard.scorecard.upper.scores.ones.potentialScore}})</td>
-            </tr>
-            <tr>
-                <td> Ones</td>
-                <td v-if="playerScorecard.scorecard.upper.scores.ones.currentScore"> {{playerScorecard.scorecard.upper.scores.ones.currentScore}}</td>
-                <td v-on:click="handleSaveScore" v-model="selectedScore" v-if="playerScorecard.scorecard.upper.scores.ones.potentialScore"> ({{playerScorecard.scorecard.upper.scores.ones.potentialScore}})</td>
-            </tr> -->
             <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
                 <td v-model="selectedScore" v-on:click="handleSaveScore" v-if="row.potentialScore"> ({{row.potentialScore}})</td>
@@ -29,8 +19,20 @@
                 <td>Upper Bonus</td>
                 <td v-if="playerScorecard.scorecard.upper.upperBonus >= 0">{{playerScorecard.scorecard.upper.upperBonus}}</td>
             </tr>
+            <tr>
+                <th>Lower Section</th>
+            </tr>
+            <tr v-for="(row, index) in playerScorecard.scorecard.lower.scores" :row="row" :key="index">
+                <td> {{ index }}  </td>
+                <td v-model="selectedScore" v-on:click="handleSaveScore" v-if="row.potentialScore"> ({{row.potentialScore}})</td>
+                <td v-if="row.currentScore">{{row.currentScore}}</td>
+            </tr>
+            <tr>
+                <td> Total Score </td>
+                <td> {{playerScorecard.scorecard.lower.totalScore}} </td>
+            </tr>
 </table>
-
+    <p>{{mergedDiceArray}}</p>
     </div>  
 </template>
 
@@ -42,15 +44,6 @@ import Scorecard from '../models/scorecard.js';
 import SavedDice from './SavedDice.vue';
 import RolledDice from './RolledDice.vue';
 
-// current scores
-
-
-// dice come in
-// dice get checked to see what they score
-// update scorecard to this score
-// handle click to save score 
-// empty merged after saved
-
 export default {
     data(){
         return{
@@ -60,15 +53,15 @@ export default {
             blankScorecard: { 
                 upper: {
                     scores: {
-                        ones:{currentScore: 0, potentialScore: 2, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
-                        twos:{currentScore: null, potentialScore: 4, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
+                        ones:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
+                        twos:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
                         threes:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
                         fours:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
                         fives:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
                         sixes:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
                     },
                     validDicePlacement: false,
-                    subTotal: 0, 
+                    subTotal: null, 
                     upperBonus: null,
                 },
             
@@ -83,7 +76,7 @@ export default {
                         yahtzee:{currentScore: null, potentialScore: null, scoringRule: "If All Five Dice Have The Same Face Value You Can Score Here. This Is Worth 50 Points. Jocker Rule: If You Roll Another Yatzee After Filling This Box With A Score Of 50 You Will Gain A Bouns 100 Points And You Can Place This These Dice In Any Box"}
                     },
                     validDicePlacement: false,
-                    totalScore: 0
+                    totalScore: null
                 },
                 allowZeroScore: false,
             },
@@ -93,7 +86,7 @@ export default {
         this.getNewScoreCard(),
         this.calculateScore(),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
-            this.mergedDiceArray = [];
+            // this.mergedDiceArray = [];
             let rolledDice = [];
             for (let die of diceArray) {
                 rolledDice.push(die);

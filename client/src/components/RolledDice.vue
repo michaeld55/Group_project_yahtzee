@@ -26,7 +26,7 @@ export default {
   },
   mounted(){
     this.getDiceNumbers(),
-    eventBus.$on('dice-unselected', (dice)=>{
+    eventBus.$on('dice-unselected', (dice) => {
       this.diceArray.push(dice);
     })
   },

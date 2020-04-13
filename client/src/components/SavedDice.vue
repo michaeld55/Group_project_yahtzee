@@ -27,6 +27,7 @@ export default {
       for (let die of remainingDiceArray){
         this.savedDice.push(die);
       }
+      eventBus.$emit('saved-dice-to-scorecard', (this.savedDice))
     })
   },
 
