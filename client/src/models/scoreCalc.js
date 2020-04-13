@@ -120,7 +120,8 @@ ScoreCalc.prototype.fourOfAKind = function(){
 
 //score full house
 ScoreCalc.prototype.fullHouse = function(){
-    if (this.getUniqueFaceValues().length <= 2) {
+    let uniqueFaceValues= this.getUniqueFaceValues();
+    if (uniqueFaceValues.length === 2) {
         this.scorecard.lower.scores.fullHouse.potentialScore = 25;
         this.scorecard.lower.validDicePlacement = true
     }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
@@ -130,7 +131,6 @@ ScoreCalc.prototype.fullHouse = function(){
 }
 
 ScoreCalc.prototype.smallStraight = function(){
-    //const expected =  {currentScore: null, potentialScore: 30, accepts: 5};
     let uniqueFaceValues= this.getUniqueFaceValues();
 
     if( ( uniqueFaceValues[0] + 1 === uniqueFaceValues[1] ) && 
