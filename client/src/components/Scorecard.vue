@@ -1,9 +1,7 @@
-
-<template lang='html'>
-<div>
-    <p>SCORE CARD</p>
-    <p v-for="dice in mergedDiceArray">{{dice.diceValue}}</p>
-</div>
+<template>
+    <div>
+        <p>SCORE CARD</p>
+    </div>  
 </template>
 
 <script>
