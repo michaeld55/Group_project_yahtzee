@@ -293,7 +293,7 @@ describe('ScoreCalc', function(){
                     yahtzee:{currentScore: null, potentialScore: 0, scoringRule: "If All Five Dice Have The Same Face Value You Can Score Here. This Is Worth 50 Points. Jocker Rule: If You Roll Another Yatzee After Filling This Box With A Score Of 50 You Will Gain A Bouns 100 Points And You Can Place This These Dice In Any Box"}
                 },
                 validDicePlacement: false,
-                totalScore: null
+                totalScore: 100
             },
             allowZeroScore: true
         }

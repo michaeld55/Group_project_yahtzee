@@ -225,7 +225,7 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
     this.smallStraight();
     this.largeStraight();
     this.fullHouse();
-
+    this.sumTotal();
     this.allowZero();
 
     if ( ( this.scorecard.allowZeroScore === false ) || ( this.checkForNullScores() === false ) ){
@@ -240,8 +240,22 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
         this.smallStraight();
         this.largeStraight();
         this.fullHouse();
+        this.sumTotal();
         return this.scorecard
     }
+}
+
+ScoreCalc.prototype.sumTotal = function(){
+    let lowerTotal = 0;
+
+    for (let row in this.scorecard.lower.scores) {
+        if ( this.scorecard.lower.scores[row].currentScore != null ){
+            lowerTotal += this.scorecard.lower.scores[row].currentScore
+        }
+    }
+    this.scorecard.lower.totalScore = (lowerTotal + this.scorecard.upper.subTotal);
+    return this.scorecard.lower.totalScore
+
 }
 
 module.exports = ScoreCalc
