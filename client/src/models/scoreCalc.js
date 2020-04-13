@@ -216,6 +216,8 @@ ScoreCalc.prototype.checkForNullScores = function(){
 
 //final method that returns all potential scores for a set of dice:
 ScoreCalc.prototype.calculatePotentialScores = function(){
+    
+    this.nullPotentialScores();
 
     this.chance();
     this.scoreUpper();
@@ -225,7 +227,9 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
     this.smallStraight();
     this.largeStraight();
     this.fullHouse();
+
     this.sumTotal();
+    
     this.allowZero();
 
     if ( ( this.scorecard.allowZeroScore === false ) || ( this.checkForNullScores() === false ) ){
@@ -256,6 +260,15 @@ ScoreCalc.prototype.sumTotal = function(){
     this.scorecard.lower.totalScore = (lowerTotal + this.scorecard.upper.subTotal);
     return this.scorecard.lower.totalScore
 
+}
+
+ScoreCalc.prototype.nullPotentialScores = function(){
+    for (let row in this.scorecard.lower.scores) {
+        this.scorecard.lower.scores[row].potentialScore = null;
+    }
+    for (let row in this.scorecard.upper.scores) {
+        this.scorecard.upper.scores[row].potentialScore = null;
+    }
 }
 
 module.exports = ScoreCalc

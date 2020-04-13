@@ -43,6 +43,7 @@ import { eventBus } from '@/main.js';
 import Scorecard from '../models/scorecard.js';
 import SavedDice from './SavedDice.vue';
 import RolledDice from './RolledDice.vue';
+import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
     data(){
@@ -50,6 +51,7 @@ export default {
             mergedDiceArray: [],
             playerScorecard: {},
             selectedScore: [],
+            calculator: {},
             blankScorecard: { 
                 upper: {
                     scores: {
@@ -84,7 +86,6 @@ export default {
     },
     mounted(){
         this.getNewScoreCard(),
-        this.calculateScore(),
 
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             console.log("rolled dice to scorecard EVENT ON")
@@ -98,6 +99,7 @@ export default {
             for (let die of rolledDice) {
                 this.mergedDiceArray.push(die);
             }
+            this.calculateScore()
         })
 
         eventBus.$on('saved-dice-to-scorecard', (diceArray) => {
@@ -119,9 +121,10 @@ export default {
         getNewScoreCard(){
             this.playerScorecard = new Scorecard(this.blankScorecard)
         },
-        calculateScore(mergedDiceArray){
-            //use scorecard model to calculate
-            return this.score
+        calculateScore(){
+            this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
+            console.log(this.calculator.calculatePotentialScores())
+            return this.playerScorecard
         },
 
         handleSaveScore(){
