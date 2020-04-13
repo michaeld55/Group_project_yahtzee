@@ -5,6 +5,7 @@
       <input v-model="playerName" type="text">
       <button v-on:click="handleSubmitName">Start the Game!</button>
     </form>
+
   </div>
 </template>
 
@@ -14,7 +15,7 @@ import { eventBus } from '@/main.js';
 export default {
   data(){
     return {
-      playerName: ""
+      playerName: null
     }
   },
 

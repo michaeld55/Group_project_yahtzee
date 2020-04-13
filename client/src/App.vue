@@ -17,7 +17,6 @@ import RolledDice from '@/components/RolledDice.vue';
 import SavedDice from '@/components/SavedDice.vue';
 import Scorecard from '@/components/Scorecard.vue';
 import PlayerForm from '@/components/PlayerForm.vue'
-
 import BlankScorecard from './models/scorecard.js';
 
 export default {
