@@ -1,11 +1,28 @@
 <template lang = "html">
-    <div>
-        <p>SCORE CARD</p>
-        <table v-if="playerScorecard.scorecard" style="width:100%">
-            <tr>
+
+  <div class="list">
+    <table v-if="playerScorecard.scorecard">
+        <tr>
+            <th>Category</th>
+            <th>Score</th> 
+        </tr>
+        <tr> 
+            <scorecard-item
+            v-for="(row, index) in playerScorecard.scorecard.upper"
+            :row="row"
+            :key="index">
+            </scorecard-item>
+        </tr>
+    </table>
+  <!-- </div> -->
+
+     <!-- <div> -->
+         <!-- <p>SCORE CARD</p>
+         <table v-if="playerScorecard.scorecard" style="width:100%">
+             <tr>
                 <th></th>
-                <th>Score</th> 
-            </tr>
+               <th>Score</th> 
+             </tr> -->
             <!-- <tr>
                 <td> Ones</td>
                 <td v-if="playerScorecard.scorecard.upper.scores.ones.currentScore"> {{playerScorecard.scorecard.upper.scores.ones.currentScore}}</td>
@@ -16,10 +33,11 @@
                 <td v-if="playerScorecard.scorecard.upper.scores.ones.currentScore"> {{playerScorecard.scorecard.upper.scores.ones.currentScore}}</td>
                 <td v-on:click="handleSaveScore" v-model="selectedScore" v-if="playerScorecard.scorecard.upper.scores.ones.potentialScore"> ({{playerScorecard.scorecard.upper.scores.ones.potentialScore}})</td>
             </tr> -->
-            <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
-                <td> {{ index }}  </td>
+            <!-- <scorecard-item v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index"> -->
+                <!-- <td> {{ index }}  </td>
                 <td v-model="selectedScore" v-on:click="handleSaveScore" v-if="row.potentialScore"> ({{row.potentialScore}})</td>
-                <td v-if="row.currentScore">{{row.currentScore}}</td>
+                <td v-if="row.currentScore">{{row.currentScore}}</td> -->
+                <!-- </scorecard-item>
             </tr>
             <tr>
                 <td>Subtotal</td>
@@ -29,7 +47,7 @@
                 <td>Upper Bonus</td>
                 <td v-if="playerScorecard.scorecard.upper.upperBonus >= 0">{{playerScorecard.scorecard.upper.upperBonus}}</td>
             </tr>
-</table>
+</table> -->
 
     </div>  
 </template>
@@ -41,6 +59,7 @@ import { eventBus } from '@/main.js';
 import Scorecard from '../models/scorecard.js';
 import SavedDice from './SavedDice.vue';
 import RolledDice from './RolledDice.vue';
+import ScorecardItem from './ScorecardItem.vue';
 
 // current scores
 
@@ -126,6 +145,10 @@ export default {
             
             console.dir(this.selectedScore)
         }
+    },
+
+    components: {
+        "scorecard-item": ScorecardItem
     }
 
 }
