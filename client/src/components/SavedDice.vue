@@ -39,7 +39,6 @@ export default {
     sendSaved(){
 
       if(this.savedDice.length > 0){
-          console.log("saved dice goes to scorecard EMIT")
           eventBus.$emit('saved-dice-to-scorecard', (this.savedDice));
       }
     }

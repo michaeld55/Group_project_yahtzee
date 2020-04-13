@@ -8,7 +8,7 @@
             </tr>
             <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
-                <td v-model="selectedScore" v-on:click="handleSaveScore" v-if="row.potentialScore"> ({{row.potentialScore}})</td>
+                <td  v-if="row.potentialScore"> ({{row.potentialScore}})<button v-model="selectedScore" v-on:click="handleSaveScore"> it works ?</button></td>
                 <td v-if="row.currentScore">{{row.currentScore}}</td>
             </tr>
             <tr>
@@ -24,7 +24,7 @@
             </tr>
             <tr v-for="(row, index) in playerScorecard.scorecard.lower.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
-                <td v-model="selectedScore" v-on:click="handleSaveScore" v-if="row.potentialScore"> ({{row.potentialScore}})</td>
+                <td v-if="row.potentialScore" > ({{row.potentialScore}})<button v-model="selectedScore" v-on:click="handleSaveScore" > it works ?</button></td>
                 <td v-if="row.currentScore">{{row.currentScore}}</td>
             </tr>
             <tr>
@@ -50,7 +50,7 @@ export default {
         return{
             mergedDiceArray: [],
             playerScorecard: {},
-            selectedScore: [],
+            selectedScore: {},
             calculator: {},
             blankScorecard: { 
                 upper: {
@@ -88,7 +88,6 @@ export default {
         this.getNewScoreCard(),
 
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
-            console.log("rolled dice to scorecard EVENT ON")
             if(diceArray.length === 5){
                 this.mergedDiceArray = [];
             }
@@ -103,8 +102,7 @@ export default {
         })
 
         eventBus.$on('saved-dice-to-scorecard', (diceArray) => {
-            
-            console.log("saved dice to scorecard EVENT ON")
+
             this.mergedDiceArray = [];
             let savedDice = [];
 
@@ -123,14 +121,13 @@ export default {
         },
         calculateScore(){
             this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
-            console.log(this.calculator.calculatePotentialScores())
+            this.calculator.calculatePotentialScores();
             return this.playerScorecard
         },
 
         handleSaveScore(){
-            
-            console.dir(this.selectedScore)
-        }
+            console.log("happens")
+        },
     }
 
 }
