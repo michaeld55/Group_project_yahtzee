@@ -4,10 +4,15 @@ const ScoreCalc = function(scorecard, dice){
 }
 
 ScoreCalc.prototype.diceValues = function(){
-    result = []
+    result = [];
     result = this.dice.map( die => die.diceValue )
     return result;
 }
+
+ScoreCalc.prototype.getUniqueFaceValues = function(){
+    const result = [...new Set(this.dice.map(dice => dice.diceValue))];
+    return result.sort();
+};
 
 ScoreCalc.prototype.addDice = function(dice){
     result = dice.reduce((total, die) => {
@@ -47,11 +52,10 @@ ScoreCalc.prototype.sumSubTotal = function(){
 }
 
 ScoreCalc.prototype.allowZero = function(){
-    if(!this.scorecard.upper.validDicePlacement && !this.scorecard.upper.validDicePlacement){
-        this.allowZero = true
+    if(this.scorecard.upper.validDicePlacement && this.scorecard.lower.validDicePlacement){
+        this.allowZero = false
     }
 }
-
 
 ScoreCalc.prototype.scoreUpper = function(){
     let diceFaceValue = 1;
@@ -83,8 +87,7 @@ ScoreCalc.prototype.scoreUpper = function(){
 
 }
 
-
-// score lower
+// score of a kind
 ScoreCalc.prototype.threeOfAKind = function(){
     let diceFaceValue = 1;
     while (diceFaceValue <= 6)
@@ -119,7 +122,7 @@ ScoreCalc.prototype.fourOfAKind = function(){
         }
         else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.fourOfAKind.currentScore  === null ) )
         {
-            this.scorecard.lower.scores[row].potentialScore = 0
+            this.scorecard.lower.scores.fourOfAKind.potentialScore = 0
         }
 
         diceFaceValue ++;
@@ -127,103 +130,106 @@ ScoreCalc.prototype.fourOfAKind = function(){
     return this.scorecard.lower.scores.fourOfAKind
 }
 
-
-
-// score of a kind
-
 //score full house
+ScoreCalc.prototype.fullHouse = function(){
+    if (this.getUniqueValues().length <= 2) {
+        this.scorecard.lower.scores.fullHouse.potentialScore = 25;
+        this.scorecard.lower.validDicePlacement = true
+    }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
+        this.scorecard.lower.scores.fullHouse.potentialScore = 0;
+    }
+    return this.scorecard.lower.scores.fullHouse;
+}
 
-// score straights
 ScoreCalc.prototype.smallStraight = function(){
     //const expected =  {currentScore: null, potentialScore: 30, accepts: 5};
-    let diceFaceValues = this.diceValues();
-    diceFaceValues.sort();
+    let uniqueFaceValues= this.getUniqueFaceValues();
 
-    smallStraightArray1 =  [1, 2, 3, 4];
-    smallStraightArray2 =  [2, 3, 4, 5];
-    smallStraightArray3 =  [3, 4, 5, 6];
-    //compare any 4 values from the diceFaceValues to the three smallStraights
-
-
-    
-    /*
-        array to check = diceFaceValues first 4 
-        then
-        array to check = diceFaceValues last 4
-    */
-   for (var i = 0; i < 2; i++) {
-    //    if(diceFaceValues.slice(i,i+4)===smallStraightArray1){         
-    //    }
-        if(diceFaceValues[i]!=smallStraightArray1[i]){
-            continue;
-        } else if(diceFaceValues[i]!=smallStraightArray2[i]){
-            continue;
-        } else if(diceFaceValues[i]!= smallStraightArray3[i]){
-            break;
-        } else {
-            return this.scorecard.lower.scores.smallStraight;
+    if( ( uniqueFaceValues[0] + 1 === uniqueFaceValues[1] ) && 
+        ( uniqueFaceValues[0] + 2 === uniqueFaceValues[2] ) && 
+        ( uniqueFaceValues[0] + 3 === uniqueFaceValues[3] ) && 
+        (this.scorecard.lower.scores.smallStraight.currentScore === null))
+        {
+            this.scorecard.lower.scores.smallStraight.potentialScore = 30;
+            this.scorecard.lower.validDicePlacement = true
+        } 
+        else if ( (uniqueFaceValues[1] + 1 === uniqueFaceValues[2] ) &&
+                (uniqueFaceValues[1] + 2 === uniqueFaceValues[3]) && 
+                (uniqueFaceValues[1] + 3 === uniqueFaceValues[4]) &&
+                this.scorecard.lower.scores.smallStraight.currentScore === null)
+        {
+            this.scorecard.lower.scores.smallStraight.potentialScore = 30;
+            this.scorecard.lower.validDicePlacement = true
+        }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.smallStraight.currentScore  === null )){
+            this.scorecard.lower.scores.smallStraight.potentialScore = 0;
         }
 
-  }
-  
-
+    return this.scorecard.lower.scores.smallStraight;
 }
 
 ScoreCalc.prototype.largeStraight = function(){
+    let uniqueFaceValues= this.getUniqueFaceValues();
+    if( ( uniqueFaceValues[0] < 3) 
+        && ( uniqueFaceValues[4] === uniqueFaceValues[0] + 4 ) 
+        && ( this.scorecard.lower.scores.largeStraight.currentScore === null ) )
+    {
+        this.scorecard.lower.scores.largeStraight.potentialScore = 40;
+        this.scorecard.lower.validDicePlacement = true
+    }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.largeStraight.currentScore  === null )){
+        this.scorecard.lower.scores.largeStraight.potentialScore = 0;
+    }
+    return this.scorecard.lower.scores.largeStraight;
+}
 
-    let diceFaceValues= this.diceValues();
-    diceFaceValues.sort();
+ScoreCalc.prototype.yahtzee = function(){
+    if ( (this.getUniqueFaceValues.length === 1) && (this.scorecard.lower.scores.yahtzee.currentScore  === null) ){
+        this.scorecard.lower.scores.yahtzee.potentialScore = 50;
+        this.scorecard.lower.validDicePlacement = true
+    } 
+    else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.yahtzee.currentScore  === null ) )
+    {
+        this.scorecard.lower.scores.yahtzee.potentialScore = 0
+    } 
+    else if ((this.getUniqueFaceValues.length === 1) && ( this.scorecard.lower.scores.yahtzee.currentScore > 0 ) )
+    {
+        this.scorecard.lower.scores.yahtzee.potentialScore = this.scorecard.lower.scores.yahtzee.currentScore + 100;
+    }
     
-    if((diceFaceValues === [1, 2, 3, 4, 5,]) || (diceFaceValues === [2, 3, 4, 5, 6])){
-
-    }
-
-    // sort rolled dice
-
-    // check if equals array
+    return this.scorecard.lower.scores.yahtzee;
 }
 
-
-
-// score yatzee
-ScoreCalc.prototype.yatzee = function(){
-    let diceFaceValue = 1;
-    while (diceFaceValue <= 6)
-    {   
-        diceWithFaceValue = this.getDiceWith(diceFaceValue);
-        if ( ( diceWithFaceValue.length === 5 ) && ( this.scorecard.lower.scores.yahtzee.currentScore === null ) )
-        {
-            this.scorecard.lower.scores.yahtzee.potentialScore  = 50
-            this.scorecard.lower.validDicePlacement = true
-        }
-        else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.yahtzee.currentScore  === null ) )
-        {
-            this.scorecard.lower.scores.yahtzee.potentialScore = 0
-        }
-
-        else if ( ( diceWithFaceValue.length === 5 ) && ( this.scorecard.lower.scores.yahtzee.currentScore > 0 ) )
-        {
-            this.scorecard.lower.scores.yahtzee.currentScore += 100;
-        }
-
-        diceFaceValue ++;
+// score chance
+ScoreCalc.prototype.chance = function(){
+    if(this.scorecard.lower.scores.chance.currentScore === null){
+        sumDice = this.addDice(this.dice);
+        this.scorecard.lower.scores.chance.potentialScore = sumDice
+        this.scorecard.lower.validDicePlacement = true
     }
-    return this.scorecard.lower.scores.yahtzee
+    return this.scorecard.lower.scores.chance
 }
 
+//final method that returns all potential scores for a set of dice:
+ScoreCalc.prototype.calculatePotentialScores = function(){
+    //while(this.scorecard.lower.validDicePlacement === false){
+    // score lower
+        // check 3 of kind,
+        // check 4 of a kind
+        // check full house
+        // check yahtzee
+        // check chance
+        // small straight
+        // large straight
+    //}
+    // score upper
+    this.scoreUpper();
+        // check ones
+        // check twos
+        // .....
+    // if all potentialScore  > 0
+    // allow zero = false
+    // potentialScore === 0 now = null
+}
+    
 
-//score chance
-
-// score full card
-
-// if all boxes are null then upperVaildSection = false
 
 module.exports = ScoreCalc
-
-/*
-
-for (i = 0; i < cars.length; i += 4) {
-  text += cars[i] + "<br>";
-}
-
-*/
