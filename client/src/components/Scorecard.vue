@@ -1,15 +1,40 @@
 <template lang = "html">
     <div>
         <p>SCORE CARD</p>
-
-        <ul v-for="(row, index) in playerScorecard.scorecard" :row="row" :key="index" > 
-            <li v-if="row.scores">{{ row.scores }}</li>
-            <li v-else> {{row}} </li>
-        </ul>
-
+        <table v-if="playerScorecard.scorecard" style="width:100%">
+            <tr>
+                <th></th>
+                <th>Score</th> 
+            </tr>
+            <!-- <tr>
+                <td> Ones</td>
+                <td v-if="playerScorecard.scorecard.upper.scores.ones.currentScore"> {{playerScorecard.scorecard.upper.scores.ones.currentScore}}</td>
+                <td v-on:click="handleSaveScore" v-if="playerScorecard.scorecard.upper.scores.ones.potentialScore"> ({{playerScorecard.scorecard.upper.scores.ones.potentialScore}})</td>
+            </tr>
+            <tr>
+                <td> Ones</td>
+                <td v-if="playerScorecard.scorecard.upper.scores.ones.currentScore"> {{playerScorecard.scorecard.upper.scores.ones.currentScore}}</td>
+                <td v-on:click="handleSaveScore" v-model="selectedScore" v-if="playerScorecard.scorecard.upper.scores.ones.potentialScore"> ({{playerScorecard.scorecard.upper.scores.ones.potentialScore}})</td>
+            </tr> -->
+            <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
+                <td> {{ index }}  </td>
+                <td v-model="selectedScore" v-on:click="handleSaveScore" v-if="row.potentialScore"> ({{row.potentialScore}})</td>
+                <td v-if="row.currentScore">{{row.currentScore}}</td>
+            </tr>
+            <tr>
+                <td>Subtotal</td>
+                <td v-if="playerScorecard.scorecard.upper.subTotal >= 0">{{playerScorecard.scorecard.upper.subTotal}}</td>
+            </tr>
+            <tr>
+                <td>Upper Bonus</td>
+                <td v-if="playerScorecard.scorecard.upper.upperBonus >= 0">{{playerScorecard.scorecard.upper.upperBonus}}</td>
+            </tr>
+</table>
 
     </div>  
 </template>
+
+
 
 <script>
 import { eventBus } from '@/main.js';
@@ -29,12 +54,14 @@ import RolledDice from './RolledDice.vue';
 export default {
     data(){
         return{
+            mergedDiceArray: [],
             playerScorecard: {},
+            selectedScore: [],
             blankScorecard: { 
                 upper: {
                     scores: {
-                        ones:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
-                        twos:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
+                        ones:{currentScore: 0, potentialScore: 2, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
+                        twos:{currentScore: null, potentialScore: 4, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
                         threes:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
                         fours:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
                         fives:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
@@ -60,12 +87,11 @@ export default {
                 },
                 allowZeroScore: false,
             },
-            mergedDiceArray: []
         }
     },
     mounted(){
-        this.calculateScore(),
         this.getNewScoreCard(),
+        this.calculateScore(),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             this.mergedDiceArray = [];
             let rolledDice = [];
@@ -94,6 +120,11 @@ export default {
         calculateScore(mergedDiceArray){
             //use scorecard model to calculate
             return this.score
+        },
+
+        handleSaveScore(){
+            
+            console.dir(this.selectedScore)
         }
     }
 
@@ -101,5 +132,11 @@ export default {
 </script>
 
 <style scoped>
-
+    table {
+        border: 3px black solid;
+    }
+    td {
+        border-bottom: 1px black solid;
+        border-left: 1px black solid;
+    }
 </style>
