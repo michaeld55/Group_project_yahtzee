@@ -20,13 +20,17 @@ export default {
     eventBus.$on('dice-selected', (dice) => {
       this.savedDice.push(dice);
     }),
-
-    eventBus.$emit('saved-dice-to-scorecard', (this.savedDice))
-
+    eventBus.$on('rolled-dice-to-scorecard', () => {
+      this.sendSaved();
+    }),
     eventBus.$on('move-remaining-dice', (remainingDiceArray) => {
       for (let die of remainingDiceArray){
         this.savedDice.push(die);
       }
+      eventBus.$emit('saved-dice-to-scorecard', (this.savedDice))
+    })
+    eventBus.$on("score-saved", () =>{
+      this.savedDice =[]
     })
   },
 
@@ -34,8 +38,13 @@ export default {
     handleClickSaved(index){
       eventBus.$emit('dice-unselected', this.savedDice[index]);
       this.savedDice.splice(index, 1);
-    }
+    },
+    sendSaved(){
 
+      if(this.savedDice.length > 0){
+          eventBus.$emit('saved-dice-to-scorecard', (this.savedDice));
+      }
+    }
   }
 }
 </script>

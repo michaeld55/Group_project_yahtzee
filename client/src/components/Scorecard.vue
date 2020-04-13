@@ -1,38 +1,69 @@
 <template lang = "html">
     <div>
         <p>SCORE CARD</p>
-        <p>{{ playerScorecard }}</p>
+        <table v-if="playerScorecard.scorecard" style="width:100%">
+            <tr>
+                <th>Upper Section</th>
+                <th>Score</th> 
+            </tr>
+            <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
+                <td> {{ index }}  </td>
+                <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
+                <td v-if="row.currentScore != null">{{row.currentScore}}</td>
+            </tr>
+            <tr>
+                <td>Subtotal</td>
+                <td v-if="playerScorecard.scorecard.upper.subTotal != null">{{playerScorecard.scorecard.upper.subTotal}}</td>
+            </tr>
+            <tr>
+                <td>Upper Bonus</td>
+                <td v-if="playerScorecard.scorecard.upper.upperBonus != null">{{playerScorecard.scorecard.upper.upperBonus}}</td>
+            </tr>
+            <tr>
+                <th>Lower Section</th>
+            </tr>
+            <tr v-for="(row, index) in playerScorecard.scorecard.lower.scores" :row="row" :key="index">
+                <td> {{ index }}  </td>
+                <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
+                <td v-if="row.currentScore != null">{{row.currentScore}}</td>
+            </tr>
+            <tr>
+                <td> Total Score </td>
+                <td> {{playerScorecard.scorecard.lower.totalScore}} </td>
+            </tr>
+</table>
+    <p>{{mergedDiceArray}}</p>
     </div>  
 </template>
+
+
 
 <script>
 import { eventBus } from '@/main.js';
 import Scorecard from '../models/scorecard.js';
 import SavedDice from './SavedDice.vue';
 import RolledDice from './RolledDice.vue';
-
-// current scores
-
-
-// dice come in
-// dice get checked to see what they score
-// update scorecard to this score
-// handle click to save score 
-// empty merged after saved
+import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
+    name: "scorecard",
+    props: ["blankScorecard"],
     data(){
         return{
-            score: 0,
+            mergedDiceArray: [],
             playerScorecard: {},
-            mergedDiceArray: []
+            "selectedScore": 0,
+            turnCounter: 0,
+            calculator: {},
         }
     },
     mounted(){
-        this.calculateScore(),
         this.getNewScoreCard(),
+
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
-            this.mergedDiceArray = [];
+            if(diceArray.length === 5){
+                this.mergedDiceArray = [];
+            }
             let rolledDice = [];
             for (let die of diceArray) {
                 rolledDice.push(die);
@@ -40,10 +71,14 @@ export default {
             for (let die of rolledDice) {
                 this.mergedDiceArray.push(die);
             }
+            this.calculateScore()
         })
 
         eventBus.$on('saved-dice-to-scorecard', (diceArray) => {
+
+            this.mergedDiceArray = [];
             let savedDice = [];
+
             for (let die of diceArray) {
                 savedDice.push(die);
             }
@@ -51,20 +86,38 @@ export default {
                 this.mergedDiceArray.push(die);
             }
         })
+
     },
     methods: {
         getNewScoreCard(){
-            playerScorecard = new Scorecard
+            this.playerScorecard = new Scorecard(this.blankScorecard)
         },
-        calculateScore(mergedDiceArray){
-            //use scorecard model to calculate
-            return this.score
-        }
+        calculateScore(){
+            this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
+            this.calculator.calculatePotentialScores();
+            return this.playerScorecard
+        },
+
+        handleSaveScore(row){
+            this.selectedScore = row.potentialScore
+            row.currentScore = this.selectedScore
+            this.calculator.nullPotentialScores();
+            this.calculator.sumSubTotal();
+            eventBus.$emit("score-saved", this.mergedDiceArray)
+            this.turnCounter ++;
+            this.mergedDiceArray = []
+        },
     }
 
 }
 </script>
 
 <style scoped>
-
+    table {
+        border: 3px black solid;
+    }
+    td {
+        border-bottom: 1px black solid;
+        border-left: 1px black solid;
+    }
 </style>

@@ -14,6 +14,7 @@ export default {
   name:'RolledDice',
   data(){
     return {
+      ///props ?????
       diceArray: [
         {diceValue: 0, id: 1},
         {diceValue: 0, id: 2},
@@ -26,8 +27,12 @@ export default {
   },
   mounted(){
     this.getDiceNumbers(),
-    eventBus.$on('dice-unselected', (dice)=>{
+    eventBus.$on('dice-unselected', (dice) => {
       this.diceArray.push(dice);
+    })
+    eventBus.$on("score-saved", (dice) =>{
+      this.diceArray = dice
+      this.rollsLeft = 3
     })
   },
   methods: {
@@ -48,9 +53,11 @@ export default {
         this.rollsLeft --;
         eventBus.$emit('rolled-dice-to-scorecard', this.diceArray)
       } else if ( (this.rollsLeft === 1) && (this.diceArray.length > 0) ){
+        this.getDiceNumbers();
         eventBus.$emit('move-remaining-dice', this.diceArray)
         let diceArrayLength = this.diceArray.length
         this.diceArray.splice(0, diceArrayLength)
+        eventBus.$emit('rolled-dice-to-scorecard', this.diceArray)
         this.rollsLeft --;
       }
     }
