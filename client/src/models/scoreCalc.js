@@ -120,11 +120,7 @@ ScoreCalc.prototype.fourOfAKind = function(){
 
 //score full house
 ScoreCalc.prototype.fullHouse = function(){
-<<<<<<< HEAD
     if (this.getUniqueFaceValues().length <= 2) {
-=======
-    if (this.getUniqueValues().length <= 2) {
->>>>>>> 2da734d4d35d9b345dbc935434e2f29e6deb19e3
         this.scorecard.lower.scores.fullHouse.potentialScore = 25;
         this.scorecard.lower.validDicePlacement = true
     }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
