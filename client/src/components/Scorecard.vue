@@ -9,7 +9,7 @@
             <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
                 <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
-                <td v-if="row.currentScore">{{row.currentScore}}</td>
+                <td v-if="row.currentScore != null">{{row.currentScore}}</td>
             </tr>
             <tr>
                 <td>Subtotal</td>
@@ -25,7 +25,7 @@
             <tr v-for="(row, index) in playerScorecard.scorecard.lower.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
                 <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
-                <td v-if="row.currentScore">{{row.currentScore}}</td>
+                <td v-if="row.currentScore != null">{{row.currentScore}}</td>
             </tr>
             <tr>
                 <td> Total Score </td>

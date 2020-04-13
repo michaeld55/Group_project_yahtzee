@@ -233,11 +233,9 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
     this.sumTotal();
     
     this.allowZero();
-    console.log(this.allowZero())
     if ( this.scorecard.allowZeroScore === false ){
         return this.scorecard
     }else if ( this.checkForNullScores() === true){
-        console.log(this.scorecard.allowZeroScore)
         this.scorecard.allowZeroScore = true
         this.chance();
         this.scoreUpper();
