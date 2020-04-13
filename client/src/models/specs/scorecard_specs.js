@@ -42,7 +42,7 @@ describe('ScoreCalc', function(){
                 validDicePlacement: false,
                 totalScore: null
             },
-            allowZeroScore: true,
+            allowZeroScore: false,
         };
         scoreCalc = new ScoreCalc(scorecard, dice);
     })
@@ -115,7 +115,7 @@ describe('ScoreCalc', function(){
             sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
         },
         validDicePlacement: false,
-        subTotal: 5, 
+        subTotal: 13, 
         upperBonus: null};
         assert.deepStrictEqual(actual2, expected2)
     })
@@ -217,7 +217,7 @@ describe('ScoreCalc', function(){
         scoreCalc2 = new ScoreCalc(scorecard, dice2);
 
         const actual = scoreCalc2.fullHouse();
-        const expected = {currentScore: null, potentialScore: null, scoringRule: "If Three Dice Have The Same Face Value And Two Other Dice Also Have A Matching Face Value You Can Score Here. This Is Worth 25 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"};
+        const expected = {currentScore: null, potentialScore: 25, scoringRule: "If Three Dice Have The Same Face Value And Two Other Dice Also Have A Matching Face Value You Can Score Here. This Is Worth 25 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"};
         assert.deepStrictEqual(actual, expected)
     })
 
@@ -225,5 +225,78 @@ describe('ScoreCalc', function(){
         const actual = scoreCalc.getUniqueFaceValues();
         const expected = [1,2,3,5];
         assert.deepStrictEqual(actual, expected);
+    })
+
+    it("should be able to score one roll of dice", function(){
+        die1 = {diceValue: 1};
+        die2 = {diceValue: 2};
+        die3 = {diceValue: 3};
+        die4 = {diceValue: 4};
+        die5 = {diceValue: 5};
+
+        dice2 = [die1, die2, die3, die4, die5];
+        scorecard2 = { 
+            upper: {
+                scores: {
+                    ones:{currentScore: 1, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
+                    twos:{currentScore: 2, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
+                    threes:{currentScore: 3, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
+                    fours:{currentScore: 4, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
+                    fives:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
+                    sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
+                },
+                validDicePlacement: false,
+                subTotal: 15, 
+                upperBonus: null,
+            },
+          
+            lower: {
+                scores:{
+                    threeOfAKind:{currentScore: null, potentialScore: 0, scoringRule: "If Three Or More Dice Have The Same Face Value You Can Score Here. Add The Face Values Of All Dice And Place That Score Here"},
+                    fourOfAKind:{currentScore: null, potentialScore: 0, scoringRule: "If Four Or More Dice Have The Same Face Value You Can Score Here. Add The Face Values Of All Dice And Place That Score Here"},
+                    fullHouse:{currentScore: null, potentialScore: 0, scoringRule: "If Three Dice Have The Same Face Value And Two Other Dice Also Have A Matching Face Value You Can Score Here. This Is Worth 25 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"},
+                    smallStraight:{currentScore: 30, potentialScore: null, scoringRule: "If Your Dice Have The Face Values Of 1, 2, 3, 4 Or 2, 3, 4, 5 Or 3, 4, 5, 6 You Can Score Here. This Is Worth 30 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value" },
+                    largeStraight:{currentScore: 40, potentialScore: null, scoringRule: "If Your Dice Have The Face Values Of 1, 2, 3, 4, 5 Or 2, 3, 4, 5, 6 You Can Score Here. This Is Worth 40 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"},
+                    chance:{currentScore: 15, potentialScore: null, scoringRule: "Add The Face Values Of All Dice Together And Place That Score Here"},
+                    yahtzee:{currentScore: null, potentialScore: 0, scoringRule: "If All Five Dice Have The Same Face Value You Can Score Here. This Is Worth 50 Points. Jocker Rule: If You Roll Another Yatzee After Filling This Box With A Score Of 50 You Will Gain A Bouns 100 Points And You Can Place This These Dice In Any Box"}
+                },
+                validDicePlacement: false,
+                totalScore: null
+            },
+            allowZeroScore: false
+        }
+        scoreCalc2 = new ScoreCalc(scorecard2, dice2);
+        const actual = scoreCalc2.calculatePotentialScores();
+        const expected = { 
+            upper: {
+                scores: {
+                    ones:{currentScore: 1, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
+                    twos:{currentScore: 2, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
+                    threes:{currentScore: 3, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
+                    fours:{currentScore: 4, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
+                    fives:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
+                    sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
+                },
+                validDicePlacement: false,
+                subTotal: 15, 
+                upperBonus: null,
+            },
+          
+            lower: {
+                scores:{
+                    threeOfAKind:{currentScore: null, potentialScore: 0, scoringRule: "If Three Or More Dice Have The Same Face Value You Can Score Here. Add The Face Values Of All Dice And Place That Score Here"},
+                    fourOfAKind:{currentScore: null, potentialScore: 0, scoringRule: "If Four Or More Dice Have The Same Face Value You Can Score Here. Add The Face Values Of All Dice And Place That Score Here"},
+                    fullHouse:{currentScore: null, potentialScore: 0, scoringRule: "If Three Dice Have The Same Face Value And Two Other Dice Also Have A Matching Face Value You Can Score Here. This Is Worth 25 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"},
+                    smallStraight:{currentScore: 30, potentialScore: null, scoringRule: "If Your Dice Have The Face Values Of 1, 2, 3, 4 Or 2, 3, 4, 5 Or 3, 4, 5, 6 You Can Score Here. This Is Worth 30 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value" },
+                    largeStraight:{currentScore: 40, potentialScore: null, scoringRule: "If Your Dice Have The Face Values Of 1, 2, 3, 4, 5 Or 2, 3, 4, 5, 6 You Can Score Here. This Is Worth 40 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"},
+                    chance:{currentScore: 15, potentialScore: null, scoringRule: "Add The Face Values Of All Dice Together And Place That Score Here"},
+                    yahtzee:{currentScore: null, potentialScore: 0, scoringRule: "If All Five Dice Have The Same Face Value You Can Score Here. This Is Worth 50 Points. Jocker Rule: If You Roll Another Yatzee After Filling This Box With A Score Of 50 You Will Gain A Bouns 100 Points And You Can Place This These Dice In Any Box"}
+                },
+                validDicePlacement: false,
+                totalScore: null
+            },
+            allowZeroScore: true
+        }
+        assert.deepStrictEqual(actual, expected)
     })
 });

@@ -28,11 +28,10 @@ ScoreCalc.prototype.getDiceWith = function(value){
 
 ScoreCalc.prototype.sumSubTotal = function(){
     let total = 0;
-    let subSum = []
-    subSum.push(this.scorecard.upper.scores)
+
     for (let row in this.scorecard.upper.scores) {
-        if(this.scorecard.upper.scores[row].currentScore != null){
-            total = this.scorecard.upper.scores[row].currentScore
+        if ( this.scorecard.upper.scores[row].currentScore != null ){
+            total += this.scorecard.upper.scores[row].currentScore
         }
     }
     this.scorecard.upper.subTotal = total
@@ -40,8 +39,8 @@ ScoreCalc.prototype.sumSubTotal = function(){
 }
 
 ScoreCalc.prototype.allowZero = function(){
-    if(this.scorecard.upper.validDicePlacement && this.scorecard.lower.validDicePlacement){
-        this.allowZero = false
+    if( ( this.scorecard.upper.validDicePlacement === false ) && ( this.scorecard.lower.validDicePlacement === false ) ){
+        this.scorecard.allowZeroScore = true
     }
 }
 
@@ -156,7 +155,7 @@ ScoreCalc.prototype.smallStraight = function(){
 }
 
 ScoreCalc.prototype.largeStraight = function(){
-    let uniqueFaceValues= this.getUniqueFaceValues();
+    let uniqueFaceValues = this.getUniqueFaceValues();
     if( ( uniqueFaceValues[0] < 3) 
         && ( uniqueFaceValues[4] === uniqueFaceValues[0] + 4 ) 
         && ( this.scorecard.lower.scores.largeStraight.currentScore === null ) )
@@ -170,7 +169,10 @@ ScoreCalc.prototype.largeStraight = function(){
 }
 
 ScoreCalc.prototype.yahtzee = function(){
-    if ( (this.getUniqueFaceValues.length === 1) && (this.scorecard.lower.scores.yahtzee.currentScore  === null) ){
+
+    let uniqueFaceValues = this.getUniqueFaceValues();
+
+    if ( (uniqueFaceValues.length === 1) && (this.scorecard.lower.scores.yahtzee.currentScore  === null) ){
         this.scorecard.lower.scores.yahtzee.potentialScore = 50;
         this.scorecard.lower.validDicePlacement = true
     } 
@@ -188,7 +190,8 @@ ScoreCalc.prototype.yahtzee = function(){
 
 // score chance
 ScoreCalc.prototype.chance = function(){
-    if(this.scorecard.lower.scores.chance.currentScore === null){
+    if ( this.scorecard.lower.scores.chance.currentScore === null )
+    {
         sumDice = this.addDice(this.dice);
         this.scorecard.lower.scores.chance.potentialScore = sumDice
         this.scorecard.lower.validDicePlacement = true
@@ -196,28 +199,49 @@ ScoreCalc.prototype.chance = function(){
     return this.scorecard.lower.scores.chance
 }
 
+ScoreCalc.prototype.checkForNullScores = function(){
+    let checkUnscoredBoxes = false;
+    for(let row in this.scorecard.upper.scores){
+        if ( row.potentialScore === null ){
+            checkUnscoredBoxes = true;  
+        }
+    }
+    for (let row in this.scorecard.lower.scores){
+        if (row.potentialScore === null){
+            checkUnscoredBoxes = true;
+        }
+    }
+    return checkUnscoredBoxes;
+}
+
 //final method that returns all potential scores for a set of dice:
 ScoreCalc.prototype.calculatePotentialScores = function(){
-    //while(this.scorecard.lower.validDicePlacement === false){
-    // score lower
-        // check 3 of kind,
-        // check 4 of a kind
-        // check full house
-        // check yahtzee
-        // check chance
-        // small straight
-        // large straight
-    //}
-    // score upper
-    this.scoreUpper();
-        // check ones
-        // check twos
-        // .....
-    // if all potentialScore  > 0
-    // allow zero = false
-    // potentialScore === 0 now = null
-}
-    
 
+    this.chance();
+    this.scoreUpper();
+    this.yahtzee();
+    this.threeOfAKind();
+    this.fourOfAKind();
+    this.smallStraight();
+    this.largeStraight();
+    this.fullHouse();
+
+    this.allowZero();
+
+    if ( ( this.scorecard.allowZeroScore === false ) || ( this.checkForNullScores() === false ) ){
+        return this.scorecard
+    }else if ( this.checkForNullScores() ===  true ){
+        this.scorecard.allowZeroScores = true
+        this.chance();
+        this.scoreUpper();
+        this.yahtzee();
+        this.threeOfAKind();
+        this.fourOfAKind();
+        this.smallStraight();
+        this.largeStraight();
+        this.fullHouse();
+        return this.scorecard
+    }
+}
 
 module.exports = ScoreCalc
