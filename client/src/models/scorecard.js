@@ -1,5 +1,5 @@
-const Scorecard = function(scorecard){
+const BlankScorecard = function(scorecard){
     this.scorecard = scorecard
 }
 
-module.exports = Scorecard;
+module.exports = BlankScorecard;
