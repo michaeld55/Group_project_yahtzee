@@ -1,6 +1,7 @@
-<template>
+<template lang = "html">
     <div>
         <p>SCORE CARD</p>
+        <p>{{ playerScorecard }}</p>
     </div>  
 </template>
 
@@ -12,8 +13,7 @@ import RolledDice from './RolledDice.vue';
 
 // current scores
 
-//import Scorecard from scorecard.js
-// const scorecard = new Scorecard
+
 // dice come in
 // dice get checked to see what they score
 // update scorecard to this score
@@ -24,12 +24,13 @@ export default {
     data(){
         return{
             score: 0,
+            playerScorecard: {},
             mergedDiceArray: []
         }
     },
     mounted(){
         this.calculateScore(),
-
+        this.getNewScoreCard(),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             this.mergedDiceArray = [];
             let rolledDice = [];
@@ -52,7 +53,9 @@ export default {
         })
     },
     methods: {
- 
+        getNewScoreCard(){
+            playerScorecard = new Scorecard
+        },
         calculateScore(mergedDiceArray){
             //use scorecard model to calculate
             return this.score

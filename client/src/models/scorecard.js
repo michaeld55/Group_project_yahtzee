@@ -1,4 +1,4 @@
-scorecard = { 
+const scorecard = { 
     upper: {
         scores: {
             ones:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
@@ -28,3 +28,4 @@ scorecard = {
     },
     allowZeroScore: false,
 };
+module.exports = scorecard;
