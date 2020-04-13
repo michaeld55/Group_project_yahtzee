@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <player-form></player-form>
     <high-scores></high-scores>
     <div >
       <rolled-dice></rolled-dice>
@@ -15,6 +16,7 @@ import HighScores from '@/components/HighScores.vue';
 import RolledDice from '@/components/RolledDice.vue';
 import SavedDice from '@/components/SavedDice.vue';
 import Scorecard from '@/components/Scorecard.vue';
+import PlayerForm from '@/components/PlayerForm.vue'
 
 export default {
   name: "app",
@@ -31,7 +33,8 @@ export default {
     'high-scores': HighScores,
     'rolled-dice': RolledDice,
     'saved-dice': SavedDice,
-    'scorecard': Scorecard
+    'scorecard': Scorecard,
+    'player-form': PlayerForm
   },
   methods: {
     // getDiceNumbers(){
