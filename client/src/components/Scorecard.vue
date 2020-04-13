@@ -13,11 +13,11 @@
             </tr>
             <tr>
                 <td>Subtotal</td>
-                <td v-if="playerScorecard.scorecard.upper.subTotal >= 0">{{playerScorecard.scorecard.upper.subTotal}}</td>
+                <td v-if="playerScorecard.scorecard.upper.subTotal != null">{{playerScorecard.scorecard.upper.subTotal}}</td>
             </tr>
             <tr>
                 <td>Upper Bonus</td>
-                <td v-if="playerScorecard.scorecard.upper.upperBonus >= 0">{{playerScorecard.scorecard.upper.upperBonus}}</td>
+                <td v-if="playerScorecard.scorecard.upper.upperBonus != null">{{playerScorecard.scorecard.upper.upperBonus}}</td>
             </tr>
             <tr>
                 <th>Lower Section</th>
