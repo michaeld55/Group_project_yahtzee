@@ -81,12 +81,21 @@ describe('ScoreCalc', function(){
     it("should be able to show potential score in upper", function(){
         const actual = scoreCalc.scoreUpper();
         const expected = {scores:{
+<<<<<<< HEAD
             ones:{currentScore: null, potentialScore: 1, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
             twos:{currentScore: null, potentialScore: 4, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
             threes:{currentScore: null, potentialScore: 3, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
             fours:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
             fives:{currentScore: null, potentialScore: 5, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
             sixes:{currentScore: null, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"}, 
+=======
+            ones:{currentScore: null, potentialScore: 1, accepts: 1}, 
+            twos:{currentScore: null, potentialScore: 4, accepts: 2}, 
+            threes:{currentScore: null, potentialScore: 3, accepts: 3}, 
+            fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
+            fives:{currentScore: null, potentialScore: 5, accepts: 5}, 
+            sixes:{currentScore: null, potentialScore: 0, accepts: 6}, 
+>>>>>>> 2da734d4d35d9b345dbc935434e2f29e6deb19e3
         },
         validDicePlacement: true,
         subTotal: 0, 
@@ -94,12 +103,21 @@ describe('ScoreCalc', function(){
         assert.deepStrictEqual(actual, expected);
 
         scoreCalc.scorecard.upper = {scores: {
+<<<<<<< HEAD
             ones:{currentScore: 1, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
             twos:{currentScore: 4, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
             threes:{currentScore: 3, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
             fours:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
             fives:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
             sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
+=======
+            ones:{currentScore: 1, potentialScore: null, accepts: 1}, 
+            twos:{currentScore: 4, potentialScore: null, accepts: 2}, 
+            threes:{currentScore: 3, potentialScore: null, accepts: 3}, 
+            fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
+            fives:{currentScore: 5, potentialScore: null, accepts: 5}, 
+            sixes:{currentScore: null, potentialScore: 0, accepts: 6}, 
+>>>>>>> 2da734d4d35d9b345dbc935434e2f29e6deb19e3
         },
         validDicePlacement: false,
         subTotal: 0, 
@@ -107,12 +125,21 @@ describe('ScoreCalc', function(){
 
         const actual2 = scoreCalc.scoreUpper();
         const expected2 = {scores: {
+<<<<<<< HEAD
             ones:{currentScore: 1, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
             twos:{currentScore: 4, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
             threes:{currentScore: 3, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
             fours:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
             fives:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
             sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
+=======
+            ones:{currentScore: 1, potentialScore: null, accepts: 1}, 
+            twos:{currentScore: 4, potentialScore: null, accepts: 2}, 
+            threes:{currentScore: 3, potentialScore: null, accepts: 3}, 
+            fours:{currentScore: null, potentialScore: 0, accepts: 4}, 
+            fives:{currentScore: 5, potentialScore: null, accepts: 5}, 
+            sixes:{currentScore: null, potentialScore: 0, accepts: 6}, 
+>>>>>>> 2da734d4d35d9b345dbc935434e2f29e6deb19e3
         },
         validDicePlacement: false,
         subTotal: 5, 
@@ -170,10 +197,10 @@ describe('ScoreCalc', function(){
 
     it("should score a small straight", function(){
         die1 = {diceValue: 1};
-        die2 = {diceValue: 2};
-        die3 = {diceValue: 3};
-        die4 = {diceValue: 4};
-        die5 = {diceValue: 2};
+        die2 = {diceValue: 3};
+        die3 = {diceValue: 4};
+        die4 = {diceValue: 5};
+        die5 = {diceValue: 6};
 
         dice2 = [die1, die2, die3, die4, die5];
 
@@ -219,5 +246,11 @@ describe('ScoreCalc', function(){
         const actual = scoreCalc2.fullHouse();
         const expected = {currentScore: null, potentialScore: null, scoringRule: "If Three Dice Have The Same Face Value And Two Other Dice Also Have A Matching Face Value You Can Score Here. This Is Worth 25 Points. Jocker Rule: This Only Accepts A Yatzee If The Upper Score Of The Dice Face Value Is Full And You Have Filled The Yatzee Box With Any Value"};
         assert.deepStrictEqual(actual, expected)
+    })
+
+    it("should be able to get unique dice values from the array", function(){
+        const actual = scoreCalc.getUniqueFaceValues();
+        const expected = [1,2,3,5];
+        assert.deepStrictEqual(actual, expected);
     })
 });
