@@ -1,7 +1,7 @@
 <template lang = "html">
     <div>
         <p>SCORE CARD</p>
-        <p>{{ playerScorecard }}</p>
+        <!-- <p>{{ playerScorecard }}</p> -->
     </div>  
 </template>
 
@@ -54,7 +54,7 @@ export default {
     },
     methods: {
         getNewScoreCard(){
-            playerScorecard = new Scorecard
+            // playerScorecard = new Scorecard
         },
         calculateScore(mergedDiceArray){
             //use scorecard model to calculate
