@@ -58,8 +58,9 @@ export default {
         }
     },
     mounted(){
-        this.getNewScoreCard(),
-
+        eventBus.$on('game-start', playerName =>{
+                    this.getNewScoreCard()
+        }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             if(diceArray.length === 5){
                 this.mergedDiceArray = [];
