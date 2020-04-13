@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { eventBus } from '@/main.js';
+
 export default {
   data(){
     return {
@@ -18,7 +20,7 @@ export default {
 
   methods: {
     handleSubmitName: function () {
-      eventBus.$emit('game-start', playerName);
+      eventBus.$emit('game-start', this.playerName);
     }
   }
 }
