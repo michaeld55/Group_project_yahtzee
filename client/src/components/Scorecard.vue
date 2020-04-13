@@ -8,7 +8,7 @@
             </tr>
             <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
-                <td  v-if="row.potentialScore"> ({{row.potentialScore}})<button v-model="selectedScore" v-on:click="handleSaveScore"> it works ?</button></td>
+                <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
                 <td v-if="row.currentScore">{{row.currentScore}}</td>
             </tr>
             <tr>
@@ -24,7 +24,7 @@
             </tr>
             <tr v-for="(row, index) in playerScorecard.scorecard.lower.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
-                <td v-if="row.potentialScore" > ({{row.potentialScore}})<button v-model="selectedScore" v-on:click="handleSaveScore" > it works ?</button></td>
+                <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
                 <td v-if="row.currentScore">{{row.currentScore}}</td>
             </tr>
             <tr>
@@ -46,13 +46,14 @@ import RolledDice from './RolledDice.vue';
 import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
-    name: "vuedog-beer-list-item",
+    name: "scorecard",
     props: ["blankScorecard"],
     data(){
         return{
             mergedDiceArray: [],
             playerScorecard: {},
-            selectedScore: {},
+            "selectedScore": 0,
+            turnCounter: 0,
             calculator: {},
         }
     },
@@ -97,9 +98,14 @@ export default {
             return this.playerScorecard
         },
 
-        handleSaveScore(){
-            this.selectedScore = 
-            console.log("happens")
+        handleSaveScore(row){
+            this.selectedScore = row.potentialScore
+            row.currentScore = this.selectedScore
+            this.calculator.nullPotentialScores();
+            this.calculator.sumSubTotal();
+            eventBus.$emit("score-saved", this.mergedDiceArray)
+            this.turnCounter ++;
+            this.mergedDiceArray = []
         },
     }
 

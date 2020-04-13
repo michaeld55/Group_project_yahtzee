@@ -42,6 +42,7 @@ ScoreCalc.prototype.allowZero = function(){
     if( ( this.scorecard.upper.validDicePlacement === false ) && ( this.scorecard.lower.validDicePlacement === false ) ){
         this.scorecard.allowZeroScore = true
     }
+    return this.scorecard.allowZeroScore
 }
 
 ScoreCalc.prototype.scoreUpper = function(){
@@ -56,7 +57,7 @@ ScoreCalc.prototype.scoreUpper = function(){
             this.scorecard.upper.scores[row].potentialScore = sumDice
             this.scorecard.upper.validDicePlacement = true
         }
-        else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.upper.scores[row].currentScore === null ) )
+        else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.upper.scores[row].currentScore === null ) )
         {
             this.scorecard.upper.scores[row].potentialScore = 0
         }
@@ -86,7 +87,7 @@ ScoreCalc.prototype.threeOfAKind = function(){
             this.scorecard.lower.scores.threeOfAKind.potentialScore  = sumDice
             this.scorecard.lower.validDicePlacement = true
         }
-        else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.threeOfAKind.currentScore  === null ) )
+        else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.threeOfAKind.currentScore  === null ) )
         {
             this.scorecard.lower.scores[row].potentialScore = 0
         }
@@ -107,7 +108,7 @@ ScoreCalc.prototype.fourOfAKind = function(){
             this.scorecard.lower.scores.fourOfAKind.potentialScore  = sumDice
             this.scorecard.lower.validDicePlacement = true
         }
-        else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.fourOfAKind.currentScore  === null ) )
+        else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fourOfAKind.currentScore  === null ) )
         {
             this.scorecard.lower.scores.fourOfAKind.potentialScore = 0
         }
@@ -120,10 +121,10 @@ ScoreCalc.prototype.fourOfAKind = function(){
 //score full house
 ScoreCalc.prototype.fullHouse = function(){
     let uniqueFaceValues= this.getUniqueFaceValues();
-    if (uniqueFaceValues.length === 2) {
+    if ( (uniqueFaceValues.length === 2) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
         this.scorecard.lower.scores.fullHouse.potentialScore = 25;
         this.scorecard.lower.validDicePlacement = true
-    }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
+    }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
         this.scorecard.lower.scores.fullHouse.potentialScore = 0;
     }
     return this.scorecard.lower.scores.fullHouse;
@@ -147,7 +148,7 @@ ScoreCalc.prototype.smallStraight = function(){
         {
             this.scorecard.lower.scores.smallStraight.potentialScore = 30;
             this.scorecard.lower.validDicePlacement = true
-        }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.smallStraight.currentScore  === null )){
+        }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.smallStraight.currentScore  === null )){
             this.scorecard.lower.scores.smallStraight.potentialScore = 0;
         }
 
@@ -162,7 +163,7 @@ ScoreCalc.prototype.largeStraight = function(){
     {
         this.scorecard.lower.scores.largeStraight.potentialScore = 40;
         this.scorecard.lower.validDicePlacement = true
-    }else if( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.largeStraight.currentScore  === null )){
+    }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.largeStraight.currentScore  === null )){
         this.scorecard.lower.scores.largeStraight.potentialScore = 0;
     }
     return this.scorecard.lower.scores.largeStraight;
@@ -176,7 +177,7 @@ ScoreCalc.prototype.yahtzee = function(){
         this.scorecard.lower.scores.yahtzee.potentialScore = 50;
         this.scorecard.lower.validDicePlacement = true
     } 
-    else if ( ( this.scorecard.allowZeroScores ) && ( this.scorecard.lower.scores.yahtzee.currentScore  === null ) )
+    else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.yahtzee.currentScore  === null ) )
     {
         this.scorecard.lower.scores.yahtzee.potentialScore = 0
     } 
@@ -201,13 +202,14 @@ ScoreCalc.prototype.chance = function(){
 
 ScoreCalc.prototype.checkForNullScores = function(){
     let checkUnscoredBoxes = false;
+
     for(let row in this.scorecard.upper.scores){
-        if ( row.potentialScore === null ){
+        if ( this.scorecard.upper.scores[row].potentialScore === null ){
             checkUnscoredBoxes = true;  
         }
     }
     for (let row in this.scorecard.lower.scores){
-        if (row.potentialScore === null){
+        if (this.scorecard.lower.scores[row].potentialScore === null){
             checkUnscoredBoxes = true;
         }
     }
@@ -231,11 +233,12 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
     this.sumTotal();
     
     this.allowZero();
-
-    if ( ( this.scorecard.allowZeroScore === false ) || ( this.checkForNullScores() === false ) ){
+    console.log(this.allowZero())
+    if ( this.scorecard.allowZeroScore === false ){
         return this.scorecard
-    }else if ( this.checkForNullScores() ===  true ){
-        this.scorecard.allowZeroScores = true
+    }else if ( this.checkForNullScores() === true){
+        console.log(this.scorecard.allowZeroScore)
+        this.scorecard.allowZeroScore = true
         this.chance();
         this.scoreUpper();
         this.yahtzee();
@@ -269,6 +272,9 @@ ScoreCalc.prototype.nullPotentialScores = function(){
     for (let row in this.scorecard.upper.scores) {
         this.scorecard.upper.scores[row].potentialScore = null;
     }
+    this.scorecard.upper.validDicePlacement = false
+    this.scorecard.lower.validDicePlacement = false
+    this.allowZeroScore = false
 }
 
 module.exports = ScoreCalc

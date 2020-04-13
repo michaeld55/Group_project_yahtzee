@@ -30,6 +30,10 @@ export default {
     eventBus.$on('dice-unselected', (dice) => {
       this.diceArray.push(dice);
     })
+    eventBus.$on("score-saved", (dice) =>{
+      this.diceArray = dice
+      this.rollsLeft = 3
+    })
   },
   methods: {
     getDiceNumbers(){
