@@ -91,7 +91,7 @@ ScoreCalc.prototype.threeOfAKind = function(){
         }
         else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.threeOfAKind.currentScore  === null ) )
         {
-            this.scorecard.lower.scores[row].potentialScore = 0
+            this.scorecard.lower.scores.threeOfAKind.potentialScore = 0
         }
 
         diceFaceValue ++;
