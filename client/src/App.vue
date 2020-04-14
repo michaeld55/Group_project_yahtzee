@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <player-form v-if="!gameRunning"></player-form>
+    <p v-if="!gameRunning">{{gameOverTextBox.text}}</p>
     <high-scores></high-scores>
     <div >
       <rolled-dice v-if="gameRunning" :gameRunning="gameRunning"></rolled-dice>
@@ -29,6 +30,9 @@ export default {
     return {
       playerName: "",
       gameRunning: false,
+      gameOverTextBox: {
+        text: ""
+      },
       blankScorecard: { 
           upper: {
               scores: {
@@ -65,6 +69,7 @@ export default {
     eventBus.$on('game-start', playerName => {
       this.gameRunning = true
       this.playerName = playerName
+      this.gameOverTextBox.text= ""
     })
 
     eventBus.$on('game-end', finalScore => {
@@ -74,6 +79,8 @@ export default {
       }
       ScoreService.postScore(nameAndScore)
       this.gameRunning = false
+      this.gameOverTextBox.text = "Game has finished"
+      
     })
 
   },
