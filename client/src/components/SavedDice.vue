@@ -1,7 +1,7 @@
 <template lang = "html">
 <div>
   <p>SAVED DICE</p>
-  <p v-on:click="handleClickSaved(index)" v-for="(die, index) in savedDice" :key="index" :die="die">{{die.diceValue}}</p>
+  <img v-on:click="handleClickSaved(index)" v-for="(die, index) in savedDice" :key="index" :die="die" :alt="die.diceValue" :src="die.diceImage">
 </div>
 </template>
 
