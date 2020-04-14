@@ -103,9 +103,14 @@ export default {
             row.currentScore = this.selectedScore
             this.calculator.nullPotentialScores();
             this.calculator.sumSubTotal();
+            this.calculator.sumTotal();
             eventBus.$emit("score-saved", this.mergedDiceArray)
             this.turnCounter ++;
             this.mergedDiceArray = []
+
+            if (this.calculator.checkForEndGame() === true){
+                eventBus.$emit('game-end', this.playerScorecard.scorecard.lower.totalScore)
+            }
         },
     }
 

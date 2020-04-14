@@ -218,6 +218,22 @@ ScoreCalc.prototype.checkForNullScores = function(){
     return checkUnscoredBoxes;
 }
 
+ScoreCalc.prototype.checkForEndGame = function(){
+    let endGame = true;
+
+    for(let row in this.scorecard.upper.scores){
+        if ( this.scorecard.upper.scores[row].currentScore === null ){
+            endGame = false;  
+        }
+    }
+    for (let row in this.scorecard.lower.scores){
+        if (this.scorecard.lower.scores[row].currentScore === null){
+            checkUnscoredBoxes = false;
+        }
+    }
+    return endGame;
+}
+
 //final method that returns all potential scores for a set of dice:
 ScoreCalc.prototype.calculatePotentialScores = function(){
     
@@ -248,7 +264,10 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
         this.largeStraight();
         this.fullHouse();
         this.sumTotal();
+        
         return this.scorecard
+
+
     }
 }
 
