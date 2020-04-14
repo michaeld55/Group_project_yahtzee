@@ -1,10 +1,15 @@
 <template lang='html'>
 <div v-if="rules.length">  
-    <p>In order to calculate the score for:</p>
-    <ul v-for="rule in rules">
-        <li>{{Object.keys(rule)[0]}}:</li>
-        <p>{{Object.values(rule)[0]}}</p>
-    </ul>
+    <table style="width:100%">
+        <tr>
+            <th>Score</th>
+            <th>Score Description</th> 
+        </tr>
+        <tr v-for="rule in rules">
+            <td>{{Object.keys(rule)[0]}}:</td>
+            <td>{{Object.values(rule)[0]}}</td>
+        </tr>
+    </table>
 </div>
 </template>
 
@@ -48,8 +53,15 @@ export default {
 
 <style scoped>
 
-li {
-    font-weight: bold;
-}
+table {
+    border: 3px black solid;
+    }
+
+td {
+    border-bottom: 1px black solid;
+    border-left: 1px black solid;
+    border-right-color: 1px black solid;
+    border-top: 1px black solid;
+    }
 
 </style>
