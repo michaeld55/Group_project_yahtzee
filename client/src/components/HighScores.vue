@@ -1,19 +1,35 @@
-<template>
+<template lang="html">
 <div class="container">
-  <p>HIGHSCORES</p>
+  <details>
+    <summary>HIGHSCORES</summary>
+    <ul v-for="playerAndScore in highScoreData">
+      <li>{{ playerAndScore.playerName }}: {{ playerAndScore.highScore }}</li>
+    </ul>
+  </details>
 </div>
 </template>
 
 <script>
+import ScoreService from '../services/ScoreService.js'
 export default {
   data(){
     return {
+      highScoreData: []
     }
   },
 
   mounted(){
+    this.fetchHighScores();
+  },
+  methods: {
+    fetchHighScores: function () {
+      ScoreService.getScores()
+      .then(scores => this.highScoreData = scores)
+    }
   }
 }
+
+
 </script>
 
 <style scoped>

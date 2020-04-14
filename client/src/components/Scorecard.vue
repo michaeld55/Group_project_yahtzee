@@ -109,6 +109,7 @@ export default {
             this.mergedDiceArray = []
 
             if (this.calculator.checkForEndGame() === true){
+                
                 eventBus.$emit('game-end', this.playerScorecard.scorecard.lower.totalScore)
             }
         },

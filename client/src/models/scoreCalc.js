@@ -226,9 +226,10 @@ ScoreCalc.prototype.checkForEndGame = function(){
             endGame = false;  
         }
     }
+    
     for (let row in this.scorecard.lower.scores){
         if (this.scorecard.lower.scores[row].currentScore === null){
-            checkUnscoredBoxes = false;
+            endGame = false;
         }
     }
     return endGame;
