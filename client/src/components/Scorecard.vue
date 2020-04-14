@@ -74,17 +74,23 @@ export default {
             this.calculateScore()
         })
 
-        eventBus.$on('saved-dice-to-scorecard', (diceArray2) => {
+        eventBus.$on('saved-dice-to-scorecard', (diceArray) => {
 
             let savedDice = [];
 
-            for (let die of diceArray2) {
+            for (let die of diceArray) {
                 savedDice.push(die);
             }
             for (let die of savedDice) {
                 this.mergedDiceArray.push(die);
             }
 
+            this.calculateScore()
+        })
+
+        eventBus.$on('turn-over-to-scorecard', (diceArray) => {
+
+            this.mergedDiceArray = diceArray;
             this.calculateScore()
         })
 
