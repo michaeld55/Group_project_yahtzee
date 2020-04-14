@@ -1,8 +1,9 @@
 <template lang='html'>
 <div v-if="rules.length">  
     <p>In order to calculate the score for:</p>
-    <ul>
-        <li v-for="rule in rules">{{Object.keys(rule)[0]}}: </br> {{Object.values(rule)[0]}}</li>
+    <ul v-for="rule in rules">
+        <li>{{Object.keys(rule)[0]}}:</li>
+        <p>{{Object.values(rule)[0]}}</p>
     </ul>
 </div>
 </template>
@@ -46,5 +47,9 @@ export default {
 </script>
 
 <style scoped>
+
+li {
+    font-weight: bold;
+}
 
 </style>
