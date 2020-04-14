@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <p>ROLLED DICE</p>
-    <p v-on:click="handleClickRolled(index)" v-for="(die, index) in diceArray" :die="die" :key="index"> {{ die.diceValue }} </p>
+    <img v-on:click="handleClickRolled(index)" v-for="(die, index) in diceArray" :die="die" :key="index" :alt="die.diceValue" :src="die.diceImage">
     <button v-on:click="handleRollDice">Roll Them Dice: You Have {{rollsLeft}} rolls left</button>
   </div>
 </template>
@@ -16,11 +16,11 @@ export default {
     props:["gameRunning"]
     return {
       diceArray: [
-        {diceValue: 6},
-        {diceValue: 6},
-        {diceValue: 6},
-        {diceValue: 6},
-        {diceValue: 6}
+        {diceValue: 6, diceImage: "http://roll.diceapi.com/images/poorly-drawn/d6/6.png"},
+        {diceValue: 6, diceImage: "http://roll.diceapi.com/images/poorly-drawn/d6/6.png"},
+        {diceValue: 6, diceImage: "http://roll.diceapi.com/images/poorly-drawn/d6/6.png"},
+        {diceValue: 6, diceImage: "http://roll.diceapi.com/images/poorly-drawn/d6/6.png"},
+        {diceValue: 6, diceImage: "http://roll.diceapi.com/images/poorly-drawn/d6/6.png"},
       ],
       rollsLeft: 3
     }
