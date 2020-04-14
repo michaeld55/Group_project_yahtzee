@@ -2,7 +2,7 @@
 <div class="container">
   <details>
     <summary>HIGHSCORES</summary>
-    <ul v-for="playerAndScore in highScoreData">
+    <ul v-for="playerAndScore in sortedHighScores">
       <li>{{ playerAndScore.playerName }}: {{ playerAndScore.highScore }}</li>
     </ul>
   </details>
@@ -26,9 +26,17 @@ export default {
       ScoreService.getScores()
       .then(scores => this.highScoreData = scores)
     }
+  },
+  computed: {
+    sortedHighScores() {
+      return this.highScoreData.sort( (firstItem, secondItem) => {
+        return (firstItem.highScore < secondItem.highScore) ? 1 : -1
+      }).slice(0,6)
+    }
   }
 }
 
+// list.sort((a, b) => (a.color > b.color) ? 1 : -1)
 
 </script>
 
