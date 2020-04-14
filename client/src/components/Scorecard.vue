@@ -91,6 +91,7 @@ export default {
     },
     methods: {
         getNewScoreCard(){
+            // this.calculator.resetScorecard();
             console.log(this.blankScorecard.lower.scores.chance.currentScore)
             this.playerScorecard = new Scorecard(this.blankScorecard)
         },

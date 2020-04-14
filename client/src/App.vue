@@ -76,11 +76,13 @@ export default {
       const nameAndScore = {
         playerName: this.playerName,
         highScore: finalScore
+
       }
       ScoreService.postScore(nameAndScore)
       this.gameRunning = false
       this.gameOverTextBox.text = "Game has finished"
-      
+      this.blankScorecard = this.blankScorecard
+      console.log(this.blankScorecard.lower.scores.chance.currentScore)
     })
 
   },
@@ -101,5 +103,11 @@ export default {
 </script>
 
 <style scoped>
+
+p {
+  font-weight: bold;
+  font-size: x-large;
+  text-align: center;
+}
 
 </style>
