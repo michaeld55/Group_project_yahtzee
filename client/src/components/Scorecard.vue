@@ -58,7 +58,7 @@ export default {
     },
     mounted(){
         eventBus.$on('game-start', playerName =>{
-                    this.getNewScoreCard()
+            this.getNewScoreCard()
         }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             if(diceArray.length === 5){
@@ -90,6 +90,8 @@ export default {
     },
     methods: {
         getNewScoreCard(){
+            // this.calculator.resetScorecard();
+            console.log(this.blankScorecard.lower.scores.chance.currentScore)
             this.playerScorecard = new Scorecard(this.blankScorecard)
         },
         calculateScore(){
@@ -109,7 +111,6 @@ export default {
             this.mergedDiceArray = []
 
             if (this.calculator.checkForEndGame() === true){
-                
                 eventBus.$emit('game-end', this.playerScorecard.scorecard.lower.totalScore)
             }
         },

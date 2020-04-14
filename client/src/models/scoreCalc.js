@@ -91,7 +91,7 @@ ScoreCalc.prototype.threeOfAKind = function(){
         }
         else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.threeOfAKind.currentScore  === null ) )
         {
-            this.scorecard.lower.scores[row].potentialScore = 0
+            this.scorecard.lower.scores.threeOfAKind.potentialScore = 0
         }
 
         diceFaceValue ++;
@@ -295,6 +295,21 @@ ScoreCalc.prototype.nullPotentialScores = function(){
     this.scorecard.upper.validDicePlacement = false
     this.scorecard.lower.validDicePlacement = false
     this.allowZeroScore = false
+}
+
+ScoreCalc.prototype.resetScorecard = function(){
+    for (let row in this.scorecard.lower.scores) {
+        this.scorecard.lower.scores[row].currentScore = null;
+    }
+    for (let row in this.scorecard.upper.scores) {
+        this.scorecard.upper.scores[row].currentScore = null;
+    }
+    this.scorecard.upper.subTotal = null;
+    this.scorecard.upper.upperBonus = null;
+    this.scorecard.upper.validDicePlacement = false;
+    this.scorecard.lower.validDicePlacement = false;
+    this.lower.totalScore = null;
+    this.allowZeroScore = false;
 }
 
 module.exports = ScoreCalc
