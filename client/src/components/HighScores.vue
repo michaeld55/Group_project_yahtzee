@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     fetchHighScores: function () {
-      console.log("boop")
       ScoreService.getScores()
       .then(scores => this.highScoreData = scores)
     }

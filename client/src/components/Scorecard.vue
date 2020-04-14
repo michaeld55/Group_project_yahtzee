@@ -61,7 +61,6 @@ export default {
             this.getNewScoreCard(blankScorecard)
         }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
-            console.log("rolled")
 
             this.mergedDiceArray = [];
             
@@ -76,9 +75,7 @@ export default {
         })
 
         eventBus.$on('saved-dice-to-scorecard', (diceArray2) => {
-            console.log("saved")
 
-            
             let savedDice = [];
 
             for (let die of diceArray2) {
@@ -99,6 +96,7 @@ export default {
         calculateScore(){
             this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
             this.calculator.calculatePotentialScores();
+            console.log(this.calculator.calculatePotentialScores())
             return this.playerScorecard
         },
 
