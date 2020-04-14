@@ -16,20 +16,16 @@ export default {
     props:["gameRunning"]
     return {
       diceArray: [
-        {diceValue: 0, id: 1},
-        {diceValue: 0, id: 2},
-        {diceValue: 0, id: 3},
-        {diceValue: 0, id: 4},
-        {diceValue: 0, id: 5}
+        {diceValue: 6},
+        {diceValue: 6},
+        {diceValue: 6},
+        {diceValue: 6},
+        {diceValue: 6}
       ],
       rollsLeft: 3
     }
   },
   mounted(){
-    eventBus.$on('game-start', (playerName) =>{
-      consolse.log("hellp")
-      this.getDiceNumbers()
-    }),
 
     eventBus.$on('dice-unselected', (dice) => {
       this.diceArray.push(dice);

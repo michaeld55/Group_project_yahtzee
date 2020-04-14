@@ -1,9 +1,9 @@
 <template lang="html">
   <div>
-    <form v-on:submit.prevent>
+    <form v-on:submit.prevent="handleSubmitName">
       <label for="player-name">Your Name: </label>
-      <input v-model="playerName" type="text">
-      <button v-on:click="handleSubmitName">Start the Game!</button>
+      <input type="text" id="playerName" playerName="playerName" v-model="playerName" required/>
+      <button>Start the Game!</button>
     </form>
 
   </div>

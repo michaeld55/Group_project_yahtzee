@@ -103,6 +103,7 @@ export default {
             row.currentScore = this.selectedScore
             this.calculator.nullPotentialScores();
             this.calculator.sumSubTotal();
+            this.calculator.sumTotal();
             eventBus.$emit("score-saved", this.mergedDiceArray)
             this.turnCounter ++;
             this.mergedDiceArray = []
