@@ -58,7 +58,8 @@ export default {
     },
     mounted(){
         eventBus.$on('game-start', playerName =>{
-                    this.getNewScoreCard()
+            console.log("here?")
+            this.getNewScoreCard()
         }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             if(diceArray.length === 5){
@@ -90,6 +91,7 @@ export default {
     },
     methods: {
         getNewScoreCard(){
+            console.log(this.blankScorecard.lower.scores.chance.currentScore)
             this.playerScorecard = new Scorecard(this.blankScorecard)
         },
         calculateScore(){
