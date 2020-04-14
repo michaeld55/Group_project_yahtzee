@@ -1,5 +1,5 @@
 <template lang='html'>
-<div v-if="rules">  
+<div v-if="rules.length">  
     <ul>
         <li v-for="rule in rules">{{rule}}</li>
     </ul>
@@ -13,25 +13,31 @@ export default {
     name: 'rules-list',
     data(){
         return{
-            rules: [],
-            scoreCard: null
+            rules:[],
+            isDisplayed: false
         }
     },
-    props: ['scoreCard'],
     mounted(){
-        eventBus.$on('display-rules', (scoreCard)=>{
-            this.scoreCard= scoreCard
-            this.displayRules()
+        eventBus.$on('display-rules', (blankScorecard) => {
+            this.displayRules(blankScorecard)
         })
     },
     methods: {
-      displayRules(){
-          for(row in this.scoreCard.upper.scores){
-              this.rules.push(row.scoringRule)
+      displayRules(scoreCard){
+          if (!this.isDisplayed) {
+            Object.keys(scoreCard.upper.scores).forEach((row) => {
+                // var ruleObject= {};
+                // ruleObject[row]= scoreCard.upper.scores[row].scoringRule
+                // console.log(ruleObject)
+                this.rules.push(scoreCard.upper.scores[row].scoringRule)
+            })
+            Object.keys(scoreCard.lower.scores).forEach((row) => {
+                this.rules.push(scoreCard.upper.scores[row].scoringRule)
+            })
+          } else {
+            this.rules = []
           }
-          for(row in this.scoreCard.lower.scores){
-              this.rules.push(row.scoringRule)
-          }
+          this.isDisplayed = !this.isDisplayed
       }
     }
 
