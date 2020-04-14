@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <player-form v-if="!gameRunning"></player-form>
+    <p v-if="!gameRunning">{{gameOverTextBox.text}}</p>
     <high-scores></high-scores>
     <div >
       <rolled-dice v-if="gameRunning" :gameRunning="gameRunning"></rolled-dice>
       <saved-dice v-if="gameRunning" :gameRunning="gameRunning"></saved-dice>
     </div>
-    <scorecard :blankScorecard="blankScorecard" :gameRunning="gameRunning"></scorecard>
+    <scorecard :gameRunning="gameRunning"></scorecard>
     <button v-on:click="handleClick">{{button.text}}</button>
     <rules-list />
   </div>
@@ -14,6 +15,7 @@
 
 <script>
 import { eventBus } from '@/main.js';
+import ScoreService from './services/ScoreService.js';
 import HighScores from '@/components/HighScores.vue';
 import RolledDice from '@/components/RolledDice.vue';
 import SavedDice from '@/components/SavedDice.vue';
@@ -26,13 +28,63 @@ export default {
   name: "app",
   data(){
     return {
+      playerName: "",
       button : {
         text: 'Display the rules'
       },
       rulesDisplayed: false,
       gameRunning: false,
-      blankScorecard: { 
-          upper: {
+      gameOverTextBox: {
+        text: ""
+      },
+      blankScorecard: {}
+      }
+    },
+  mounted(){
+      
+    eventBus.$on('game-start', playerName => {
+      this.blankScorecard = this.newScorecard();
+      this.gameRunning = true
+      this.playerName = playerName
+      this.gameOverTextBox.text= ""
+      eventBus.$emit("game-ready", this.blankScorecard)
+    })
+
+    eventBus.$on('game-end', finalScore => {
+      const nameAndScore = {
+        playerName: this.playerName,
+        highScore: finalScore
+
+      }
+      ScoreService.postScore(nameAndScore)
+      this.gameRunning = false
+      this.gameOverTextBox.text = "Game has finished"
+      console.log(this.blankScorecard.lower.scores.chance.currentScore)
+    })
+
+  },
+  components: {
+    'high-scores': HighScores,
+    'rolled-dice': RolledDice,
+    'saved-dice': SavedDice,
+    'scorecard': Scorecard,
+    'rules-list': RulesList,
+    'player-form': PlayerForm
+  },
+  methods: {
+      handleClick(){
+            if (!this.rulesDisplayed){
+              this.blankScorecard = this.newScorecard();
+              this.button.text = "Hide the rules"
+              this.rulesDisplayed= !this.rulesDisplayed
+            } else {
+              this.button.text= "Display the rules"
+
+              this.rulesDisplayed= !this.rulesDisplayed            }
+            eventBus.$emit('display-rules', this.blankScorecard)
+      },
+      newScorecard(){
+        return  {upper: {
               scores: {
                   ones:{currentScore: null, potentialScore: null, scoringRule: "Add the value of all dice with a face value of one."}, 
                   twos:{currentScore: null, potentialScore: null, scoringRule: "Add the value of any dice with a face value of two."}, 
@@ -59,39 +111,18 @@ export default {
               totalScore: null
           },
           allowZeroScore: false,
-        }
       }
-    },
-  mounted(){
-      
-    eventBus.$on('game-start', playerName =>{
-      this.gameRunning = true
-    })
-
-  },
-  components: {
-    'high-scores': HighScores,
-    'rolled-dice': RolledDice,
-    'saved-dice': SavedDice,
-    'scorecard': Scorecard,
-    'rules-list': RulesList,
-    'player-form': PlayerForm
-  },
-  methods: {
-      handleClick(){
-            if (!this.rulesDisplayed){
-              this.button.text = "Hide the rules"
-              this.rulesDisplayed= !this.rulesDisplayed
-            } else {
-              this.button.text= "Display the rules"
-              this.rulesDisplayed= !this.rulesDisplayed
-            }
-            eventBus.$emit('display-rules', this.blankScorecard)
-      }
+    }
   }
 }
 </script>
 
 <style scoped>
+
+p {
+  font-weight: bold;
+  font-size: x-large;
+  text-align: center;
+}
 
 </style>

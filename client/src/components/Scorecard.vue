@@ -46,7 +46,7 @@ import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
     name: "scorecard",
-    props: ["blankScorecard", "gameRunning"],
+    props: ["gameRunning"],
     data(){
         return{
             mergedDiceArray: [],
@@ -57,13 +57,14 @@ export default {
         }
     },
     mounted(){
-        eventBus.$on('game-start', playerName =>{
-                    this.getNewScoreCard()
+        eventBus.$on('game-ready', blankScorecard =>{
+            this.getNewScoreCard(blankScorecard)
         }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
-            if(diceArray.length === 5){
-                this.mergedDiceArray = [];
-            }
+            console.log("rolled")
+
+            this.mergedDiceArray = [];
+            
             let rolledDice = [];
             for (let die of diceArray) {
                 rolledDice.push(die);
@@ -74,23 +75,27 @@ export default {
             this.calculateScore()
         })
 
-        eventBus.$on('saved-dice-to-scorecard', (diceArray) => {
-
-            this.mergedDiceArray = [];
+        eventBus.$on('saved-dice-to-scorecard', (diceArray2) => {
+            console.log("saved")
+  
+            // this.mergedDiceArray = [];
+            
             let savedDice = [];
 
-            for (let die of diceArray) {
+            for (let die of diceArray2) {
                 savedDice.push(die);
             }
             for (let die of savedDice) {
                 this.mergedDiceArray.push(die);
             }
+
+            this.calculateScore()
         })
 
     },
     methods: {
-        getNewScoreCard(){
-            this.playerScorecard = new Scorecard(this.blankScorecard)
+        getNewScoreCard(blankScorecard){
+            this.playerScorecard = new Scorecard(blankScorecard)
         },
         calculateScore(){
             this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
@@ -107,6 +112,10 @@ export default {
             eventBus.$emit("score-saved", this.mergedDiceArray)
             this.turnCounter ++;
             this.mergedDiceArray = []
+
+            if (this.calculator.checkForEndGame() === true){
+                eventBus.$emit('game-end', this.playerScorecard.scorecard.lower.totalScore)
+            }
         },
     }
 

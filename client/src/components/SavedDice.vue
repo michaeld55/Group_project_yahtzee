@@ -1,7 +1,7 @@
 <template lang = "html">
 <div>
   <p>SAVED DICE</p>
-  <p v-on:click="handleClickSaved(index)" v-for="(die, index) in savedDice" :key="index" :die="die">{{die.diceValue}}</p>
+  <img v-on:click="handleClickSaved(index)" v-for="(die, index) in savedDice" :key="index" :die="die" :alt="die.diceValue" :src="die.diceImage">
 </div>
 </template>
 
@@ -27,10 +27,9 @@ export default {
       for (let die of remainingDiceArray){
         this.savedDice.push(die);
       }
-      eventBus.$emit('saved-dice-to-scorecard', (this.savedDice))
     })
     eventBus.$on("score-saved", () =>{
-      this.savedDice =[]
+      this.savedDice = []
     })
   },
 
@@ -40,7 +39,6 @@ export default {
       this.savedDice.splice(index, 1);
     },
     sendSaved(){
-
       if(this.savedDice.length > 0){
           eventBus.$emit('saved-dice-to-scorecard', (this.savedDice));
       }

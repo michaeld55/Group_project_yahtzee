@@ -91,7 +91,7 @@ ScoreCalc.prototype.threeOfAKind = function(){
         }
         else if ( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.threeOfAKind.currentScore  === null ) )
         {
-            this.scorecard.lower.scores[row].potentialScore = 0
+            this.scorecard.lower.scores.threeOfAKind.potentialScore = 0
         }
 
         diceFaceValue ++;
@@ -218,6 +218,23 @@ ScoreCalc.prototype.checkForNullScores = function(){
     return checkUnscoredBoxes;
 }
 
+ScoreCalc.prototype.checkForEndGame = function(){
+    let endGame = true;
+
+    for(let row in this.scorecard.upper.scores){
+        if ( this.scorecard.upper.scores[row].currentScore === null ){
+            endGame = false;  
+        }
+    }
+    
+    for (let row in this.scorecard.lower.scores){
+        if (this.scorecard.lower.scores[row].currentScore === null){
+            endGame = false;
+        }
+    }
+    return endGame;
+}
+
 //final method that returns all potential scores for a set of dice:
 ScoreCalc.prototype.calculatePotentialScores = function(){
     
@@ -248,7 +265,10 @@ ScoreCalc.prototype.calculatePotentialScores = function(){
         this.largeStraight();
         this.fullHouse();
         this.sumTotal();
+        
         return this.scorecard
+
+
     }
 }
 
@@ -275,6 +295,21 @@ ScoreCalc.prototype.nullPotentialScores = function(){
     this.scorecard.upper.validDicePlacement = false
     this.scorecard.lower.validDicePlacement = false
     this.allowZeroScore = false
+}
+
+ScoreCalc.prototype.resetScorecard = function(){
+    for (let row in this.scorecard.lower.scores) {
+        this.scorecard.lower.scores[row].currentScore = null;
+    }
+    for (let row in this.scorecard.upper.scores) {
+        this.scorecard.upper.scores[row].currentScore = null;
+    }
+    this.scorecard.upper.subTotal = null;
+    this.scorecard.upper.upperBonus = null;
+    this.scorecard.upper.validDicePlacement = false;
+    this.scorecard.lower.validDicePlacement = false;
+    this.lower.totalScore = null;
+    this.allowZeroScore = false;
 }
 
 module.exports = ScoreCalc
