@@ -74,12 +74,13 @@ export default {
   methods: {
       handleClick(){
             if (!this.rulesDisplayed){
+              this.blankScorecard = this.newScorecard();
               this.button.text = "Hide the rules"
               this.rulesDisplayed= !this.rulesDisplayed
             } else {
               this.button.text= "Display the rules"
-              this.rulesDisplayed= !this.rulesDisplayed
-            }
+
+              this.rulesDisplayed= !this.rulesDisplayed            }
             eventBus.$emit('display-rules', this.blankScorecard)
       },
       newScorecard(){

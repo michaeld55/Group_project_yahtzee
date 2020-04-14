@@ -57,7 +57,6 @@ export default {
         eventBus.$emit('move-remaining-dice', this.diceArray)
         let diceArrayLength = this.diceArray.length
         this.diceArray.splice(0, diceArrayLength)
-        // eventBus.$emit('rolled-dice-to-scorecard', this.diceArray)
         this.rollsLeft --;
       }
     }
