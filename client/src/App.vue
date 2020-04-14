@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <player-form></player-form>
+    <player-form v-if="!gameRunning"></player-form>
     <high-scores></high-scores>
     <div >
-      <rolled-dice></rolled-dice>
-      <saved-dice></saved-dice>
+      <rolled-dice v-if="gameRunning" :gameRunning="gameRunning"></rolled-dice>
+      <saved-dice v-if="gameRunning" :gameRunning="gameRunning"></saved-dice>
     </div>
-    <scorecard :blankScorecard="blankScorecard"></scorecard>
+    <scorecard :blankScorecard="blankScorecard" :gameRunning="gameRunning"></scorecard>
     <button v-on:click="handleClick">{{button.text}}</button>
     <rules-list />
   </div>
@@ -30,6 +30,7 @@ export default {
         text: 'Display the rules'
       },
       rulesDisplayed: false,
+      gameRunning: false,
       blankScorecard: { 
           upper: {
               scores: {
@@ -61,6 +62,13 @@ export default {
         }
       }
     },
+  mounted(){
+      
+    eventBus.$on('game-start', playerName =>{
+      this.gameRunning = true
+    })
+
+  },
   components: {
     'high-scores': HighScores,
     'rolled-dice': RolledDice,

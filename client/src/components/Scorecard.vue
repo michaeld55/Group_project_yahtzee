@@ -1,6 +1,6 @@
 <template lang = "html">
     <div>
-        <p>SCORE CARD</p>
+        <p v-if="gameRunning">SCORE CARD</p>
         <table v-if="playerScorecard.scorecard" style="width:100%">
             <tr>
                 <th>Upper Section</th>
@@ -46,7 +46,7 @@ import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
     name: "scorecard",
-    props: ["blankScorecard"],
+    props: ["blankScorecard", "gameRunning"],
     data(){
         return{
             mergedDiceArray: [],
@@ -103,6 +103,7 @@ export default {
             row.currentScore = this.selectedScore
             this.calculator.nullPotentialScores();
             this.calculator.sumSubTotal();
+            this.calculator.sumTotal();
             eventBus.$emit("score-saved", this.mergedDiceArray)
             this.turnCounter ++;
             this.mergedDiceArray = []
