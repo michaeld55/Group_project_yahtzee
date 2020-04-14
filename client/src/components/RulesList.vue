@@ -1,7 +1,8 @@
 <template lang='html'>
 <div v-if="rules.length">  
+    <p>In order to calculate the score for:</p>
     <ul>
-        <li v-for="rule in rules">{{rule}}</li>
+        <li v-for="rule in rules">{{Object.keys(rule)[0]}}: </br> {{Object.values(rule)[0]}}</li>
     </ul>
 </div>
 </template>
@@ -26,18 +27,18 @@ export default {
       displayRules(scoreCard){
           if (!this.isDisplayed) {
             Object.keys(scoreCard.upper.scores).forEach((row) => {
-                // var ruleObject= {};
-                // ruleObject[row]= scoreCard.upper.scores[row].scoringRule
-                // console.log(ruleObject)
-                this.rules.push(scoreCard.upper.scores[row].scoringRule)
+                this.rules.push({[row]: scoreCard.upper.scores[row].scoringRule})
             })
             Object.keys(scoreCard.lower.scores).forEach((row) => {
-                this.rules.push(scoreCard.upper.scores[row].scoringRule)
+                this.rules.push({[row]: scoreCard.lower.scores[row].scoringRule})
             })
           } else {
             this.rules = []
           }
           this.isDisplayed = !this.isDisplayed
+      },
+      formatRules(){
+          return this.rules
       }
     }
 
