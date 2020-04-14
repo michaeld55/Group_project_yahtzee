@@ -46,7 +46,7 @@ import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
     name: "scorecard",
-    props: ["blankScorecard", "gameRunning"],
+    props: ["gameRunning"],
     data(){
         return{
             mergedDiceArray: [],
@@ -57,8 +57,8 @@ export default {
         }
     },
     mounted(){
-        eventBus.$on('game-start', playerName =>{
-            this.getNewScoreCard()
+        eventBus.$on('game-ready', blankScorecard =>{
+            this.getNewScoreCard(blankScorecard)
         }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             if(diceArray.length === 5){
@@ -89,10 +89,8 @@ export default {
 
     },
     methods: {
-        getNewScoreCard(){
-            // this.calculator.resetScorecard();
-            console.log(this.blankScorecard.lower.scores.chance.currentScore)
-            this.playerScorecard = new Scorecard(this.blankScorecard)
+        getNewScoreCard(blankScorecard){
+            this.playerScorecard = new Scorecard(blankScorecard)
         },
         calculateScore(){
             this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
