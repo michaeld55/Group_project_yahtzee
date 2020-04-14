@@ -5,7 +5,7 @@
       <rolled-dice></rolled-dice>
       <saved-dice></saved-dice>
     </div>
-    <scorecard ></scorecard>
+    <!-- <scorecard ></scorecard> -->
     <scorecard :blankScorecard="blankScorecard"></scorecard>
     <button v-on:click="handleClick">Display rules of game</button>
     <rules-list />
