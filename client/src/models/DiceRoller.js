@@ -9,21 +9,6 @@ DiceRoller.prototype.rollDice = function(diceToRoll){
         this.allDice.push( {diceValue: randomNumber, diceImage: `http://roll.diceapi.com/images/poorly-drawn/d6/${randomNumber}.png`} )
         counter -= 1
     }
-    // index = 0;
-    // for(let die in allDice){
-
-    // }
-    /*
-    allDice {diveValue: 1}, {diveValue: 3}
-    diceToRoll {diveValue: 6, id: 5}, {diveValue: 6, id: 2}
-
-    diceToroll[0]diceValue = allDice[0]diceValue
-
-    diceToRoll {diveValue: 1, id: 5},, {diveValue: 3, id: 2}
-    return diceToRoll
-    */
-
-    // handle id 
     return this.allDice;
 }
 module.exports = DiceRoller; 

@@ -32,7 +32,7 @@ export default {
     sortedHighScores() {
       return this.highScoreData.sort( (firstItem, secondItem) => {
         return (firstItem.highScore < secondItem.highScore) ? 1 : -1
-      }).slice(0,6)
+      }).slice(0,5)
     }
   }
 }

@@ -31,7 +31,7 @@ export default {
       this.diceArray.push(dice);
     })
     eventBus.$on("score-saved", (dice) =>{
-      this.diceArray = dice
+      this.diceArray = dice;
       this.rollsLeft = 3
     })
   },
@@ -57,7 +57,7 @@ export default {
         eventBus.$emit('move-remaining-dice', this.diceArray)
         let diceArrayLength = this.diceArray.length
         this.diceArray.splice(0, diceArrayLength)
-        eventBus.$emit('rolled-dice-to-scorecard', this.diceArray)
+        // eventBus.$emit('rolled-dice-to-scorecard', this.diceArray)
         this.rollsLeft --;
       }
     }

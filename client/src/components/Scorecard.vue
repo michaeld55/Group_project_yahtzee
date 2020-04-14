@@ -61,9 +61,10 @@ export default {
             this.getNewScoreCard(blankScorecard)
         }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
-            if(diceArray.length === 5){
-                this.mergedDiceArray = [];
-            }
+            console.log("rolled")
+
+            this.mergedDiceArray = [];
+            
             let rolledDice = [];
             for (let die of diceArray) {
                 rolledDice.push(die);
@@ -74,17 +75,21 @@ export default {
             this.calculateScore()
         })
 
-        eventBus.$on('saved-dice-to-scorecard', (diceArray) => {
-
-            this.mergedDiceArray = [];
+        eventBus.$on('saved-dice-to-scorecard', (diceArray2) => {
+            console.log("saved")
+  
+            // this.mergedDiceArray = [];
+            
             let savedDice = [];
 
-            for (let die of diceArray) {
+            for (let die of diceArray2) {
                 savedDice.push(die);
             }
             for (let die of savedDice) {
                 this.mergedDiceArray.push(die);
             }
+
+            this.calculateScore()
         })
 
     },
