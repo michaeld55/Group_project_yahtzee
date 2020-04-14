@@ -1,5 +1,5 @@
 <template lang="html">
-  <div v-if="gameRunning">
+  <div>
     <p>ROLLED DICE</p>
     <p v-on:click="handleClickRolled(index)" v-for="(die, index) in diceArray" :die="die" :key="index"> {{ die.diceValue }} </p>
     <button v-on:click="handleRollDice">Roll Them Dice: You Have {{rollsLeft}} rolls left</button>
@@ -13,8 +13,8 @@ const diceRoller = new DiceRoller();
 export default {
   name:'RolledDice',
   data(){
+    props:["gameRunning"]
     return {
-      gameRunning: false,
       diceArray: [
         {diceValue: 0, id: 1},
         {diceValue: 0, id: 2},
@@ -26,9 +26,9 @@ export default {
     }
   },
   mounted(){
-    eventBus.$on('game-start', playerName =>{
+    eventBus.$on('game-start', (playerName) =>{
+      consolse.log("hellp")
       this.getDiceNumbers()
-      this.gameRunning = true
     }),
 
     eventBus.$on('dice-unselected', (dice) => {
