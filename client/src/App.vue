@@ -1,11 +1,11 @@
 <template>
   <div id="app">
+    <player-form></player-form>
     <high-scores></high-scores>
     <div >
       <rolled-dice></rolled-dice>
       <saved-dice></saved-dice>
     </div>
-    <!-- <scorecard ></scorecard> -->
     <scorecard :blankScorecard="blankScorecard"></scorecard>
     <button v-on:click="handleClick">Display rules of game</button>
     <rules-list />
@@ -19,6 +19,7 @@ import RolledDice from '@/components/RolledDice.vue';
 import SavedDice from '@/components/SavedDice.vue';
 import Scorecard from '@/components/Scorecard.vue';
 import RulesList from '@/components/RulesList.vue';
+import PlayerForm from '@/components/PlayerForm.vue';
 import BlankScorecard from './models/scorecard.js';
 
 export default {
@@ -64,7 +65,8 @@ export default {
     'rolled-dice': RolledDice,
     'saved-dice': SavedDice,
     'scorecard': Scorecard,
-    'rules-list': RulesList
+    'rules-list': RulesList,
+    'player-form': PlayerForm
   },
   methods: {
       handleClick(){

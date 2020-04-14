@@ -8,31 +8,30 @@
             </tr>
             <tr v-for="(row, index) in playerScorecard.scorecard.upper.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
-                <td  v-if="row.potentialScore"> ({{row.potentialScore}})<button v-model="selectedScore" v-on:click="handleSaveScore"> it works ?</button></td>
-                <td v-if="row.currentScore">{{row.currentScore}}</td>
+                <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
+                <td v-if="row.currentScore != null">{{row.currentScore}}</td>
             </tr>
             <tr>
                 <td>Subtotal</td>
-                <td v-if="playerScorecard.scorecard.upper.subTotal >= 0">{{playerScorecard.scorecard.upper.subTotal}}</td>
+                <td v-if="playerScorecard.scorecard.upper.subTotal != null">{{playerScorecard.scorecard.upper.subTotal}}</td>
             </tr>
             <tr>
                 <td>Upper Bonus</td>
-                <td v-if="playerScorecard.scorecard.upper.upperBonus >= 0">{{playerScorecard.scorecard.upper.upperBonus}}</td>
+                <td v-if="playerScorecard.scorecard.upper.upperBonus != null">{{playerScorecard.scorecard.upper.upperBonus}}</td>
             </tr>
             <tr>
                 <th>Lower Section</th>
             </tr>
             <tr v-for="(row, index) in playerScorecard.scorecard.lower.scores" :row="row" :key="index">
                 <td> {{ index }}  </td>
-                <td v-if="row.potentialScore" > ({{row.potentialScore}})<button v-model="selectedScore" v-on:click="handleSaveScore" > it works ?</button></td>
-                <td v-if="row.currentScore">{{row.currentScore}}</td>
+                <td  v-model="selectedScore" v-on:click="handleSaveScore(row)" v-if="row.potentialScore != null"> ({{row.potentialScore}})</td>
+                <td v-if="row.currentScore != null">{{row.currentScore}}</td>
             </tr>
             <tr>
                 <td> Total Score </td>
                 <td> {{playerScorecard.scorecard.lower.totalScore}} </td>
             </tr>
-</table>
-    <p>{{mergedDiceArray}}</p>
+        </table>
     </div>  
 </template>
 
@@ -46,19 +45,21 @@ import RolledDice from './RolledDice.vue';
 import ScoreCalc from '../models/scoreCalc.js';
 
 export default {
-    name: "vuedog-beer-list-item",
+    name: "scorecard",
     props: ["blankScorecard"],
     data(){
         return{
             mergedDiceArray: [],
             playerScorecard: {},
-            selectedScore: {},
+            "selectedScore": 0,
+            turnCounter: 0,
             calculator: {},
         }
     },
     mounted(){
-        this.getNewScoreCard(),
-
+        eventBus.$on('game-start', playerName =>{
+                    this.getNewScoreCard()
+        }),
         eventBus.$on('rolled-dice-to-scorecard', (diceArray) => {
             if(diceArray.length === 5){
                 this.mergedDiceArray = [];
@@ -97,9 +98,14 @@ export default {
             return this.playerScorecard
         },
 
-        handleSaveScore(){
-            this.selectedScore = 
-            console.log("happens")
+        handleSaveScore(row){
+            this.selectedScore = row.potentialScore
+            row.currentScore = this.selectedScore
+            this.calculator.nullPotentialScores();
+            this.calculator.sumSubTotal();
+            eventBus.$emit("score-saved", this.mergedDiceArray)
+            this.turnCounter ++;
+            this.mergedDiceArray = []
         },
     }
 

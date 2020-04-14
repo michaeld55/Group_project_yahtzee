@@ -29,6 +29,9 @@ export default {
       }
       eventBus.$emit('saved-dice-to-scorecard', (this.savedDice))
     })
+    eventBus.$on("score-saved", () =>{
+      this.savedDice =[]
+    })
   },
 
   methods:{
