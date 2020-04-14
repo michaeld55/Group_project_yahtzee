@@ -77,8 +77,7 @@ export default {
 
         eventBus.$on('saved-dice-to-scorecard', (diceArray2) => {
             console.log("saved")
-  
-            // this.mergedDiceArray = [];
+
             
             let savedDice = [];
 
