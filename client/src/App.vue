@@ -27,6 +27,7 @@ export default {
   name: "app",
   data(){
     return {
+      playerName: "",
       button : {
         text: 'Display the rules'
       },
