@@ -59,7 +59,6 @@ export default {
       ScoreService.postScore(nameAndScore)
       this.gameRunning = false
       this.gameOverTextBox.text = "Game has finished"
-      console.log(this.blankScorecard.lower.scores.chance.currentScore)
     })
 
   },
@@ -118,6 +117,14 @@ export default {
 </script>
 
 <style scoped>
+
+body, html {
+  #app {
+  display: grid;
+  grid-template-columns: 33% 33% 34%;
+  grid-template-rows:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% ;
+}
+}
 
 p {
   font-weight: bold;

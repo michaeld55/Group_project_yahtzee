@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div id="form-grid-item">
     <form v-on:submit.prevent="handleSubmitName">
       <label for="player-name">Your Name: </label>
       <input type="text" id="playerName" playerName="playerName" v-model="playerName" required/>
@@ -27,6 +27,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  #form-grid-item {
+    border: 3px solid black;
 
+
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: ;
+    grid-row-end: 2;
+    grid-row-end: 2;
+    grid-row-end: 2;
+    grid-row-end: 2;
+  }
 </style>

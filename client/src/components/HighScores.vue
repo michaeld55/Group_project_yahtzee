@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="container">
+<div id="high-scores">
   <details>
     <summary>HIGHSCORES</summary>
     <ul v-for="playerAndScore in sortedHighScores">
@@ -36,10 +36,17 @@ export default {
   }
 }
 
-// list.sort((a, b) => (a.color > b.color) ? 1 : -1)
-
 </script>
 
 <style scoped>
+
+  #high-scores {
+    border: 3px solid black;
+
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 5;
+  }
 
 </style>
