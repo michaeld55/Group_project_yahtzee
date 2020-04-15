@@ -94,12 +94,12 @@ describe('ScoreCalc', function(){
         assert.deepStrictEqual(actual, expected);
 
         scoreCalc.scorecard.upper = {scores: {
-            ones:{currentScore: 1, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
-            twos:{currentScore: 4, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
-            threes:{currentScore: 3, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
-            fours:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
-            fives:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
-            sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
+            ones:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
+            twos:{currentScore: 10, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
+            threes:{currentScore: 15, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
+            fours:{currentScore: 20, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
+            fives:{currentScore: 25, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
+            sixes:{currentScore: 30, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
         },
         validDicePlacement: false,
         subTotal: 0, 
@@ -107,16 +107,16 @@ describe('ScoreCalc', function(){
 
         const actual2 = scoreCalc.scoreUpper();
         const expected2 = {scores: {
-            ones:{currentScore: 1, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
-            twos:{currentScore: 4, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
-            threes:{currentScore: 3, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
-            fours:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
-            fives:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
-            sixes:{currentScore: null, potentialScore: 0, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
+            ones:{currentScore: 5, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of One And Place That Score Here"}, 
+            twos:{currentScore: 10, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Two And Place That Score Here"}, 
+            threes:{currentScore: 15, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Three And Place That Score Here"}, 
+            fours:{currentScore: 20, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Four And Place That Score Here"}, 
+            fives:{currentScore: 25, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Five And Place That Score Here"}, 
+            sixes:{currentScore: 30, potentialScore: null, scoringRule: "Add The Value Of Any Dice With A Face Value Of Six And Place That Score Here"},
         },
         validDicePlacement: false,
-        subTotal: 13, 
-        upperBonus: 0};
+        subTotal: 105, 
+        upperBonus: 35};
         assert.deepStrictEqual(actual2, expected2)
     })
 
@@ -372,3 +372,4 @@ describe('ScoreCalc', function(){
         assert.deepStrictEqual(actual, expected)
     })
 });
+
