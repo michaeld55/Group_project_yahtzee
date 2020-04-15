@@ -105,7 +105,7 @@ export default {
             return this.playerScorecard
         },
 
-        handleSaveScore(rowRule){
+        handleSaveScore(row){
             this.selectedScore = row.potentialScore
             row.currentScore = this.selectedScore
             let jokerRule = this.calculator.jokerRule();
