@@ -1,5 +1,5 @@
 <template lang = "html">
-<div>
+<div id="saved-dice-container">
   <p>SAVED DICE</p>
   <img v-on:click="handleClickSaved(index)" v-for="(die, index) in savedDice" :key="index" :die="die" :alt="die.diceValue" :src="die.diceImage">
 </div>
@@ -50,5 +50,14 @@ export default {
 </script>
 
 <style scoped>
+
+#saved-dice-container {
+        border: 3px solid black;
+
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
 
 </style>

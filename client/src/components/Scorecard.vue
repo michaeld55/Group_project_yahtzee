@@ -1,5 +1,5 @@
 <template lang = "html">
-    <div>
+    <div id="scorecard-container">
         <p v-if="gameRunning">SCORE CARD</p>
         <table v-if="playerScorecard.scorecard" style="width:100%">
             <tr>
@@ -105,7 +105,7 @@ export default {
             return this.playerScorecard
         },
 
-        handleSaveScore(rowRule){
+        handleSaveScore(row){
             this.selectedScore = row.potentialScore
             row.currentScore = this.selectedScore
             let jokerRule = this.calculator.jokerRule();
@@ -129,11 +129,23 @@ export default {
 </script>
 
 <style scoped>
+    #scorecard-container {
+    border: 3px solid black;
+
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 9;
+    }
+
     table {
         border: 3px black solid;
     }
     td {
         border-bottom: 1px black solid;
         border-left: 1px black solid;
+        border-right: 1px black solid;
+        border-top: 1px black solid;
+
     }
 </style>

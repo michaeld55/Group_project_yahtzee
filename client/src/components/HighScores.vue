@@ -1,5 +1,5 @@
 <template lang="html">
-<div id="high-scores">
+<div id="high-scores-container">
   <details>
     <summary>HIGHSCORES</summary>
     <ul v-for="playerAndScore in sortedHighScores">
@@ -40,7 +40,7 @@ export default {
 
 <style scoped>
 
-  #high-scores {
+  #high-scores-container {
     border: 3px solid black;
 
     grid-column-start: 1;

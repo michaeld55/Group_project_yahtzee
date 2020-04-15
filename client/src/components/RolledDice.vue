@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div id="rolled-dice-container">
     <p>ROLLED DICE</p>
     <img v-on:click="handleClickRolled(index)" v-for="(die, index) in diceArray" :die="die" :key="index" :alt="die.diceValue" :src="die.diceImage">
     <button v-on:click="handleRollDice">Roll Them Dice: You Have {{rollsLeft}} rolls left</button>
@@ -66,6 +66,15 @@ export default {
 
 
 <style scoped>
+
+#rolled-dice-container {
+      border: 3px solid black;
+
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
 
 </style>
 

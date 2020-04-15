@@ -1,5 +1,5 @@
 <template lang='html'>
-<div v-if="rules.length">  
+<div id="rules-list-container" v-if="rules.length">  
     <table style="width:100%">
         <tr>
             <th>Score</th>
@@ -52,6 +52,15 @@ export default {
 </script>
 
 <style scoped>
+
+#rules-list-container {
+    border: 3px solid black;
+
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 9;
+}
 
 table {
     border: 3px black solid;
