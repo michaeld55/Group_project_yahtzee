@@ -67,6 +67,18 @@ export default {
 
 <style scoped>
 
+/* div {
+  text-align: center;
+  display: flexbox;
+
+}
+
+button {
+  display: flexbox;
+  justify-content: flex-start;
+  text-align: center;
+} */
+
 </style>
 
 

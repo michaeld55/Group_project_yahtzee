@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <player-form v-if="!gameRunning"></player-form>
-    <p v-if="!gameRunning">{{gameOverTextBox.text}}</p>
+    <p id="gameOverText" v-if="!gameRunning">{{gameOverTextBox.text}}</p>
     <high-scores></high-scores>
-    <div >
+    <div id= "rolledAndSavedDice">
       <rolled-dice v-if="gameRunning" :gameRunning="gameRunning"></rolled-dice>
       <saved-dice v-if="gameRunning" :gameRunning="gameRunning"></saved-dice>
     </div>
     <scorecard :gameRunning="gameRunning"></scorecard>
-    <button v-on:click="handleClick">{{button.text}}</button>
-    <rules-list />
+    <div id="rulesText">
+      <button v-on:click="handleClick">{{button.text}}</button>
+      <rules-list />
+    </div>
   </div>
 </template>
 
@@ -117,12 +119,34 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
-p {
+#app {
+  display: grid;
+  /* grid-template-columns: repeat(100, 100px); */
+  /* grid-template-rows: repeat(100, 100px); */
+}
+
+#rolledAndSavedDice {
+  text-align: center;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  grid-area: 1/ 1/ span 10 / span 30;
+
+}
+
+html,body {
+  background-color: lightblue;
+}
+
+#gameOverText {
   font-weight: bold;
   font-size: x-large;
-  text-align: center;
+  font: red;
 }
+
+/* player-form {
+  font: blue;
+  text-align: center;
+} */
 
 </style>

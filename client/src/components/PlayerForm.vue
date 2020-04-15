@@ -27,6 +27,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+/* form {
+  text-align: center;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font: blue;
+}
+
+label {
+  font: blue;
+  text-align: center;
+} */
 
 </style>

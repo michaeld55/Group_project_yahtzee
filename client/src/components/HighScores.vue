@@ -43,4 +43,8 @@ export default {
 
 <style scoped>
 
+.container{
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
 </style>
