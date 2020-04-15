@@ -67,9 +67,11 @@ export default {
 
 
 <style scoped>
-
-#rolled-dice-container {
-      border: 3px solid black;
+img {
+  height: 100px
+}   
+#rolled-dice-containear {
+    border: 3px solid black;
 
     grid-column-start: 2;
     grid-column-end: 3;

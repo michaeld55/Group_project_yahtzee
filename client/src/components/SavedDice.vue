@@ -50,7 +50,9 @@ export default {
 </script>
 
 <style scoped>
-
+img {
+  height: 100px
+} 
 #saved-dice-container {
     border: 3px solid black;
 
