@@ -66,7 +66,7 @@ ScoreCalc.prototype.scoreUpper = function(){
     }
 
     this.sumSubTotal()
-    if( this.sumSubTotal >= 63 )
+    if( this.scorecard.upper.subTotal >= 63 )
     {
         this.scorecard.upper.upperBonus = 35;
     }else{
