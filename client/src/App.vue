@@ -119,12 +119,11 @@ export default {
 <style scoped>
 
 body, html {
-  #app {
   display: grid;
   grid-template-columns: 33% 33% 34%;
   grid-template-rows:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% ;
 }
-}
+
 
 p {
   font-weight: bold;

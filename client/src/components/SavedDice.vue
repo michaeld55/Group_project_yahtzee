@@ -52,7 +52,7 @@ export default {
 <style scoped>
 
 #saved-dice-container {
-        border: 3px solid black;
+    border: 3px solid black;
 
     grid-column-start: 2;
     grid-column-end: 3;
