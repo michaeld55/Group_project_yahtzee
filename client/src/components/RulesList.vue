@@ -69,7 +69,7 @@ div {
 }
 
 table {
-    width: 60%;
+    /* width: 60%; */
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     font-size: x-small;
     }

@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <player-form v-if="!gameRunning"></player-form>
+    <div id= "playerForm">
+    <player-form v-if="!gameRunning || !rulesDisplayed"></player-form>
+    </div>
     <p id="gameOverText" v-if="!gameRunning">{{gameOverTextBox.text}}</p>
-    <high-scores></high-scores>
-    <div id= "rolledAndSavedDice">
+    <high-scores v-if="!rulesDisplayed"></high-scores>
+    <div v-if="!rulesDisplayed" id= "rolledAndSavedDice">
       <rolled-dice v-if="gameRunning" :gameRunning="gameRunning"></rolled-dice>
       <saved-dice v-if="gameRunning" :gameRunning="gameRunning"></saved-dice>
     </div>
-    <scorecard :gameRunning="gameRunning"></scorecard>
-    <div id="rulesText">
-      <button v-on:click="handleClick">{{button.text}}</button>
-      <rules-list />
+    <div v-if="!rulesDisplayed" id= "scorecardDiv">
+      <scorecard :gameRunning="gameRunning"></scorecard>
     </div>
+    <button v-bind:class="{buttonTop:rulesDisplayed}" v-on:click="handleClick">{{button.text}}</button>
+      <div id="rulesTextVue">
+        <rules-list />
+      </div>
   </div>
 </template>
 
@@ -81,8 +85,8 @@ export default {
               this.rulesDisplayed= !this.rulesDisplayed
             } else {
               this.button.text= "Display the rules"
-
-              this.rulesDisplayed= !this.rulesDisplayed            }
+              this.rulesDisplayed= !this.rulesDisplayed            
+              }
             eventBus.$emit('display-rules', this.blankScorecard)
       },
       newScorecard(){
@@ -121,21 +125,54 @@ export default {
 
 <style>
 
+html, body {
+  height: 100%;
+  margin: 0px;
+}
+
+img {
+  width: 27%;
+}
+
+#playerForm {
+  font: blue;
+  grid-area: 1/ 1/ span 1 / span 1;
+}
+
 #app {
   display: grid;
-  /* grid-template-columns: repeat(100, 100px); */
-  /* grid-template-rows: repeat(100, 100px); */
+  /* grid-template-columns: repeat(10, 10%); */
+  grid-template-columns: repeat(5, 20%);
+  grid-template-rows: repeat(10, 10%);
+  background-color: lightblue;
+
 }
 
 #rolledAndSavedDice {
-  text-align: center;
+  /* text-align: center; */
   font-family: "Comic Sans MS", "Comic Sans", cursive;
-  grid-area: 1/ 1/ span 10 / span 30;
-
+  grid-area: 1/ 2/ span 1 / span 1;
 }
+
+
+/* #rulesTextVue{
+  grid-area: 1/ 1/ span1/ span2;
+} */
 
 html,body {
   background-color: lightblue;
+}
+
+/* #rulesTextButton{
+  grid-area: 10 / 2;
+} */
+
+.buttonTop{
+  grid-area: 1/1;
+}
+
+#rulesTextVue {
+  grid-area: 2/1;
 }
 
 #gameOverText {
@@ -144,9 +181,5 @@ html,body {
   font: red;
 }
 
-/* player-form {
-  font: blue;
-  text-align: center;
-} */
 
 </style>

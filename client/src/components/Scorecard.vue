@@ -128,5 +128,8 @@ export default {
     td {
         border-bottom: 1px black solid;
         border-left: 1px black solid;
+        border-right: 1px black solid;
+        border-top: 1px black solid;
+
     }
 </style>

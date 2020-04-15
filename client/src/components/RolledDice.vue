@@ -2,6 +2,7 @@
   <div>
     <p>ROLLED DICE</p>
     <img v-on:click="handleClickRolled(index)" v-for="(die, index) in diceArray" :die="die" :key="index" :alt="die.diceValue" :src="die.diceImage">
+    <br>
     <button v-on:click="handleRollDice">Roll Them Dice: You Have {{rollsLeft}} rolls left</button>
   </div>
 </template>
@@ -66,6 +67,10 @@ export default {
 
 
 <style scoped>
+
+/* img {
+  width: 10%;
+} */
 
 /* div {
   text-align: center;
