@@ -35,6 +35,12 @@ ScoreCalc.prototype.sumSubTotal = function(){
         }
     }
     this.scorecard.upper.subTotal = total
+    if( this.scorecard.upper.subTotal >= 63 )
+    {
+        this.scorecard.upper.upperBonus = 35;
+    }else{
+        this.scorecard.upper.upperBonus = 0;
+    }
     return this.scorecard.upper.subTotal
 }
 
@@ -66,12 +72,6 @@ ScoreCalc.prototype.scoreUpper = function(){
     }
 
     this.sumSubTotal()
-    if( this.scorecard.upper.subTotal >= 63 )
-    {
-        this.scorecard.upper.upperBonus = 35;
-    }else{
-        this.scorecard.upper.upperBonus = 0;
-    }
 
     return this.scorecard.upper
 
