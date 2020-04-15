@@ -102,13 +102,16 @@ export default {
         calculateScore(){
             this.calculator = new ScoreCalc(this.playerScorecard.scorecard, this.mergedDiceArray)
             this.calculator.calculatePotentialScores();
-            console.log(this.calculator.calculatePotentialScores())
             return this.playerScorecard
         },
 
-        handleSaveScore(row){
+        handleSaveScore(rowRule){
             this.selectedScore = row.potentialScore
             row.currentScore = this.selectedScore
+            let jokerRule = this.calculator.jokerRule();
+            if(jokerRule){
+               this.playerScorecard.scorecard.lower.yahtzee.currentScore = this.playerScorecard.scorecard.lower.yahtzee.potentialScore
+            }
             this.calculator.nullPotentialScores();
             this.calculator.sumSubTotal();
             this.calculator.sumTotal();
