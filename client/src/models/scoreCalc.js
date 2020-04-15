@@ -127,15 +127,14 @@ ScoreCalc.prototype.fullHouse = function(){
     if(uniqueFaceValues.length === 2){
         uniqueFaceValues = this.getDiceWith(uniqueFaceValues[0])// 1
     // [1, 1, 1] => length is 3 => full house
-        if ( (uniqueFaceValues.length === 2 || uniqueFaceValues.length === 3) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
+        if ( (uniqueFaceValues.length === 2 || uniqueFaceValues.length === 3 || this.jokerRule() === true ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
             this.scorecard.lower.scores.fullHouse.potentialScore = 25;
             this.scorecard.lower.validDicePlacement = true
         }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
             this.scorecard.lower.scores.fullHouse.potentialScore = 0;
         }
     }
-    // if jockerRulw true and ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
-    // this.jokerRule()
+    
     return this.scorecard.lower.scores.fullHouse;
 }
 
@@ -321,6 +320,36 @@ ScoreCalc.prototype.resetScorecard = function(){
 }
 
 ScoreCalc.prototype.jokerRule = function(){
+    let joker = false
+    let uniqueFaceValues = this.getUniqueFaceValues();
+    let row = uniqueFaceValues[0] - 1;
+    console.log(row)
+    
+    /*
+
+     switch (row) 
+     {
+        case 1:
+            return "ones";
+        case 2:
+            return "twos";
+        case 3:
+            return "threes";
+        case 4:
+            return "fours";
+        case 5:
+            return "fives";
+        case 5:
+            return "sixes";
+    }
+
+    */
+
+    if (( this.scorecard.lower.scores.yahtzee.currentScore != null) && ( uniqueFaceValues.length === 1 ) && ( this.scorecard.upper.scores[row].currentScore != null) ){
+        joker = true
+    }
+
+    return joker
 
 
 }
