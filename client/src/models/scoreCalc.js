@@ -124,15 +124,17 @@ ScoreCalc.prototype.fourOfAKind = function(){
 ScoreCalc.prototype.fullHouse = function(){
     // diceArray = [1,1,1,4,4]
     let uniqueFaceValues = this.getUniqueFaceValues();
-    if(uniqueFaceValues.length === 2){
-        uniqueFaceValues = this.getDiceWith(uniqueFaceValues[0])// 1
+    let jokerRule = this.jokerRule();
+
+    if (uniqueFaceValues.length === 2 || jokerRule ){
+        pairOrThree = this.getDiceWith(uniqueFaceValues[0])// 1
     // [1, 1, 1] => length is 3 => full house
-        if ( (uniqueFaceValues.length === 2 || uniqueFaceValues.length === 3 || this.jokerRule() === true ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
+        if ( (pairOrThree.length === 2 || pairOrThree.length === 3 || jokerRule ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
             this.scorecard.lower.scores.fullHouse.potentialScore = 25;
             this.scorecard.lower.validDicePlacement = true
-        }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
-            this.scorecard.lower.scores.fullHouse.potentialScore = 0;
         }
+    } else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
+        this.scorecard.lower.scores.fullHouse.potentialScore = 0;
     }
     
     return this.scorecard.lower.scores.fullHouse;
@@ -140,11 +142,13 @@ ScoreCalc.prototype.fullHouse = function(){
 
 ScoreCalc.prototype.smallStraight = function(){
     let uniqueFaceValues= this.getUniqueFaceValues();
+    let jokerRule = this.jokerRule();
 
-    if( ( uniqueFaceValues[0] + 1 === uniqueFaceValues[1] ) && 
+    if( ((( uniqueFaceValues[0] + 1 === uniqueFaceValues[1] ) && 
         ( uniqueFaceValues[0] + 2 === uniqueFaceValues[2] ) && 
-        ( uniqueFaceValues[0] + 3 === uniqueFaceValues[3] ) && 
-        (this.scorecard.lower.scores.smallStraight.currentScore === null))
+        ( uniqueFaceValues[0] + 3 === uniqueFaceValues[3] )) ||
+        (jokerRule) )&& 
+        (this.scorecard.lower.scores.smallStraight.currentScore === null) )
         {
             this.scorecard.lower.scores.smallStraight.potentialScore = 30;
             this.scorecard.lower.validDicePlacement = true
@@ -165,10 +169,12 @@ ScoreCalc.prototype.smallStraight = function(){
 
 ScoreCalc.prototype.largeStraight = function(){
     let uniqueFaceValues = this.getUniqueFaceValues();
-    if( ( uniqueFaceValues[0] < 3) 
-        && ( uniqueFaceValues[4] === uniqueFaceValues[0] + 4 ) 
-        && ( this.scorecard.lower.scores.largeStraight.currentScore === null ) )
+    let jokerRule = this.jokerRule();
+    
+    if(( (( uniqueFaceValues[0] < 3) && ( uniqueFaceValues[4] === uniqueFaceValues[0] + 4 )) || ( jokerRule) )&& ( this.scorecard.lower.scores.largeStraight.currentScore === null ))
+        
     {
+ 
         this.scorecard.lower.scores.largeStraight.potentialScore = 40;
         this.scorecard.lower.validDicePlacement = true
     }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.largeStraight.currentScore  === null )){
@@ -319,36 +325,35 @@ ScoreCalc.prototype.resetScorecard = function(){
     this.allowZeroScore = false;
 }
 
+ScoreCalc.prototype.returnRowCurrentScore = function (rowNumber) {
+    switch (rowNumber) {
+        case 1:
+            return this.scorecard.upper.scores.ones.currentScore;
+        case 2:
+            return this.scorecard.upper.scores.twos.currentScore;
+        case 3:
+            return this.scorecard.upper.scores.threes.currentScore;
+        case 4:
+            return this.scorecard.upper.scores.fours.currentScore;
+        case 5:
+            return this.scorecard.upper.scores.fives.currentScore;
+        case 6:
+            return this.scorecard.upper.scores.sixes.currentScore;
+        }
+    
+
+}
+
 ScoreCalc.prototype.jokerRule = function(){
     let joker = false
     let uniqueFaceValues = this.getUniqueFaceValues();
-    let row = uniqueFaceValues[0] - 1;
-    console.log(row)
     
-    /*
-
-     switch (row) 
-     {
-        case 1:
-            return "ones";
-        case 2:
-            return "twos";
-        case 3:
-            return "threes";
-        case 4:
-            return "fours";
-        case 5:
-            return "fives";
-        case 5:
-            return "sixes";
-    }
-
-    */
-
-    if (( this.scorecard.lower.scores.yahtzee.currentScore != null) && ( uniqueFaceValues.length === 1 ) && ( this.scorecard.upper.scores[row].currentScore != null) ){
+    let rowNumber = uniqueFaceValues[0];
+    let rowCurrentScore = this.returnRowCurrentScore(rowNumber);
+ 
+    if (( this.scorecard.lower.scores.yahtzee.currentScore != null) && ( uniqueFaceValues.length === 1 ) && ( rowCurrentScore != null) ){
         joker = true
     }
-
     return joker
 
 
