@@ -122,13 +122,20 @@ ScoreCalc.prototype.fourOfAKind = function(){
 
 //score full house
 ScoreCalc.prototype.fullHouse = function(){
-    let uniqueFaceValues= this.getUniqueFaceValues();
-    if ( (uniqueFaceValues.length === 2) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
-        this.scorecard.lower.scores.fullHouse.potentialScore = 25;
-        this.scorecard.lower.validDicePlacement = true
-    }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
-        this.scorecard.lower.scores.fullHouse.potentialScore = 0;
+    // diceArray = [1,1,1,4,4]
+    let uniqueFaceValues = this.getUniqueFaceValues();
+    if(uniqueFaceValues.length === 2){
+        uniqueFaceValues = this.getDiceWith(uniqueFaceValues[0])// 1
+    // [1, 1, 1] => length is 3 => full house
+        if ( (uniqueFaceValues.length === 2 || uniqueFaceValues.length === 3) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
+            this.scorecard.lower.scores.fullHouse.potentialScore = 25;
+            this.scorecard.lower.validDicePlacement = true
+        }else if( ( this.scorecard.allowZeroScore ) && ( this.scorecard.lower.scores.fullHouse.currentScore  === null )){
+            this.scorecard.lower.scores.fullHouse.potentialScore = 0;
+        }
     }
+    // if jockerRulw true and ( this.scorecard.lower.scores.fullHouse.currentScore  === null )) {
+    // this.jokerRule()
     return this.scorecard.lower.scores.fullHouse;
 }
 
@@ -186,6 +193,7 @@ ScoreCalc.prototype.yahtzee = function(){
     else if ((this.getUniqueFaceValues.length === 1) && ( this.scorecard.lower.scores.yahtzee.currentScore > 0 ) )
     {
         this.scorecard.lower.scores.yahtzee.potentialScore = this.scorecard.lower.scores.yahtzee.currentScore + 100;
+
     }
     
     return this.scorecard.lower.scores.yahtzee;
@@ -310,6 +318,11 @@ ScoreCalc.prototype.resetScorecard = function(){
     this.scorecard.lower.validDicePlacement = false;
     this.lower.totalScore = null;
     this.allowZeroScore = false;
+}
+
+ScoreCalc.prototype.jokerRule = function(){
+
+
 }
 
 module.exports = ScoreCalc
