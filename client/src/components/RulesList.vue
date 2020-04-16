@@ -54,12 +54,11 @@ export default {
 <style scoped>
 
 #rules-list-container {
-    border: 3px solid black;
 
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 3;
-    grid-row-end: 9;
+    grid-row-end: 6;
 }
 
 table {

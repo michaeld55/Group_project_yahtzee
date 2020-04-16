@@ -56,7 +56,10 @@ export default {
         highScore: finalScore
 
       }
+      let newHighScore = []
       ScoreService.postScore(nameAndScore)
+      .then(highScoreWithId => newHighScore.push(highScoreWithId))
+      eventBus.$emit ("new-high-score", newHighScore)
       this.gameRunning = false
       this.gameOverTextBox.text = "Game has finished"
     })
@@ -119,11 +122,22 @@ export default {
 <style scoped>
 
 body, html {
+  
+
+}
+#app{
   display: grid;
   grid-template-columns: 33% 33% 34%;
-  grid-template-rows:  12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% ;
+  grid-template-rows:  25% 25% 25% 25% 25% 25% 25% 25%;
 }
-
+button{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    height: 25%;
+    width: 25%;
+}
 
 p {
   font-weight: bold;

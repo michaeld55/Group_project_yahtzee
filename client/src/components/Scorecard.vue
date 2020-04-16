@@ -130,12 +130,11 @@ export default {
 
 <style scoped>
     #scorecard-container {
-    border: 3px solid black;
 
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 1;
-    grid-row-end: 9;
+    grid-row-end: 6;
     }
 
     table {

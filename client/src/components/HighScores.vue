@@ -20,6 +20,9 @@ export default {
 
   mounted(){
     this.fetchHighScores();
+    eventBus.$on ("new-high-score", newHighScore=>{
+      highScoreData.push(newHighScore)
+    })
   },
   methods: {
     fetchHighScores: function () {
@@ -41,12 +44,11 @@ export default {
 <style scoped>
 
   #high-scores-container {
-    border: 3px solid black;
 
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 3;
-    grid-row-end: 5;
+    grid-row-start: 4;
+    grid-row-end: 6;
   }
 
 </style>

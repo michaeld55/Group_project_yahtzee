@@ -29,8 +29,6 @@ export default {
 
 <style scoped>
   #form-container {
-    border: 3px solid black;
-
 
     grid-column-start: 1;
     grid-column-end: 2;
