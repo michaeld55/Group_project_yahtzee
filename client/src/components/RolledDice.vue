@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
 img {
-  height: 100px
+  height: 60px
 }   
 #rolled-dice-containear {
     border: 3px solid black;

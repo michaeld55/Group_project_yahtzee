@@ -11,6 +11,7 @@
 
 <script>
 import ScoreService from '../services/ScoreService.js'
+import {eventBus} from '../main.js'
 export default {
   data(){
     return {
@@ -44,11 +45,12 @@ export default {
 <style scoped>
 
   #high-scores-container {
-
+    align-self: start;
+    align-items: left;
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 3;
-    grid-row-end: 6;
+    grid-row-start: 4;
+    grid-row-end: 5;
   }
 
 </style>
