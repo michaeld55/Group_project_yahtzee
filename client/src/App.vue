@@ -135,8 +135,8 @@ button{
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
-    height: 25%;
-    width: 25%;
+    height: 50px;
+    width: 100px;
 }
 
 p {
