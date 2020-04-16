@@ -27,7 +27,6 @@ export default {
       for (let die of remainingDiceArray){
         this.savedDice.push(die);
       }
-      console.log("here")
       eventBus.$emit('turn-over-to-scorecard', (this.savedDice));
     })
     eventBus.$on("score-saved", () =>{

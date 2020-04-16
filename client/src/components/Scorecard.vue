@@ -1,5 +1,7 @@
 <template lang = "html">
     <div id="scorecard-container">
+        <br>
+        <br>
         <p v-if="gameRunning">SCORE CARD</p>
         <table v-if="playerScorecard.scorecard" style="width:100%">
             <tr>
