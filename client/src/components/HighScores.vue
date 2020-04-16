@@ -2,7 +2,7 @@
 <div id="high-scores-container">
   <details>
     <summary>HIGHSCORES</summary>
-    <ul v-for="playerAndScore in highScoreData">
+    <ul v-for="playerAndScore in sortedHighScores">
       <li>{{ playerAndScore.playerName }}: {{ playerAndScore.highScore }}</li>
     </ul>
   </details>
