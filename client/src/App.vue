@@ -127,7 +127,7 @@ body, html {
 }
 #app{
   display: grid;
-  grid-template-columns: 30% 40% 30%;
+  grid-template-columns: 25% 20% 55%;
   grid-template-rows:  25% 25% 25% 25% 25% 25% 25% 25%;
 }
 button{
@@ -135,7 +135,7 @@ button{
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
-    height: 50px;
+    height: 40px;
     width: 100px;
 }
 

@@ -131,8 +131,8 @@ export default {
 <style scoped>
     #scorecard-container {
 
-    grid-column-start: 3;
-    grid-column-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 6;
     }

@@ -1,5 +1,6 @@
 <template lang='html'>
 <div id="rules-list-container" v-if="rules.length">
+
     <p>The point of the game is to acquire as many points as possible by rolling five dice. The face values of the rolled dice are combined to make certain kinds of scores, as described in table below.  
         Per one turn, a user may roll the dice at maximum three times. Then they must select a score they want to obtain on the scorecard, which signals the end of the turn. A user can also choose to save some dice and roll others after the first and second roll in order to try achieving certain scores.
         Users can also select a score after the first roll.
@@ -60,9 +61,9 @@ export default {
 
 #rules-list-container {
 
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 2;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
     grid-row-end: 3;
 }
 
